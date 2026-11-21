@@ -31,13 +31,14 @@ include(RoboticsCoreHelpers)
 
 add_subdirectory(src)
 
+# Apps first: the integration tests reuse the pipeline library defined there.
+if(ROBOTICSCORE_BUILD_APPS)
+  add_subdirectory(apps)
+endif()
+
 if(ROBOTICSCORE_BUILD_TESTS)
   enable_testing()
   add_subdirectory(tests)
-endif()
-
-if(ROBOTICSCORE_BUILD_APPS)
-  add_subdirectory(apps)
 endif()
 
 if(ROBOTICSCORE_BUILD_BENCHMARKS)
