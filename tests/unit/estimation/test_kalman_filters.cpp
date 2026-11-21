@@ -142,7 +142,8 @@ TEST(ExtendedKalmanFilter, AnalyticAndNumericalJacobiansAgree) {
   const auto process = localization::unicycle_process_model({});
   ProcessModel numeric = process;
   numeric.jacobian = nullptr;
-  ExtendedKalmanFilter a(Vec3(1, 2, 0.5), MatX::Identity(3, 3) * 0.1);
+  ExtendedKalmanFilter a(Vec3(1, 2, 0.5), MatX::Identity(3, 3) * 0.1,
+                         localization::pose_state_space());
   ExtendedKalmanFilter b = a;
   const Vec2 u(1.0, 0.3);
   a.predict(process, u, 0.1);
@@ -163,8 +164,8 @@ TEST(ExtendedKalmanFilter, LandmarkLocalizationConverges) {
   const auto process = localization::unicycle_process_model(noise);
   math::Random rng(7);
   Vec3 truth(0.0, 0.0, 0.0);
-  ExtendedKalmanFilter ekf(Vec3(0.5, -0.5, 0.2), Vec3(1.0, 1.0, 0.1).asDiagonal());
-  ekf.set_normalizer(localization::normalize_pose);
+  ExtendedKalmanFilter ekf(Vec3(0.5, -0.5, 0.2), Vec3(1.0, 1.0, 0.1).asDiagonal(),
+                           localization::pose_state_space());
   const double dt = 0.1;
   for (int k = 0; k < 300; ++k) {
     const Vec2 u(1.0, 0.2);

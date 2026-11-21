@@ -66,10 +66,11 @@ estimation::ProcessModel unicycle_process_model(const VelocityNoise& noise) {
     return j.wrt_input * noise.control_covariance(u(0), u(1)) * j.wrt_input.transpose()
            + 1e-12 * Mat3::Identity();
   };
-  model.residual = pose_residual;
-  model.normalize = normalize_pose;
-  model.mean = pose_mean;
   return model;
+}
+
+estimation::StateSpace pose_state_space() {
+  return {pose_residual, normalize_pose, pose_mean};
 }
 
 Vec2 predict_range_bearing(const Vec3& pose, const Vec2& landmark) {

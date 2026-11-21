@@ -23,7 +23,7 @@ namespace roboticscore::estimation {
 class ExtendedKalmanFilter {
  public:
   /// @throws std::invalid_argument for an invalid initial covariance.
-  ExtendedKalmanFilter(VecX x0, MatX p0);
+  ExtendedKalmanFilter(VecX x0, MatX p0, StateSpace space = {});
 
   /// Propagates the estimate through @p model.
   /// @throws std::invalid_argument if the model has no transition function or returns
@@ -38,17 +38,14 @@ class ExtendedKalmanFilter {
   [[nodiscard]] const VecX& state() const noexcept { return x_; }
   [[nodiscard]] const MatX& covariance() const noexcept { return p_; }
 
-  void reset(VecX x, MatX p);
+  [[nodiscard]] const StateSpace& state_space() const noexcept { return space_; }
 
-  /// Optional state normaliser applied after every update (e.g. heading wrapping).
-  void set_normalizer(std::function<VecX(const VecX&)> normalize) {
-    normalize_ = std::move(normalize);
-  }
+  void reset(VecX x, MatX p);
 
  private:
   VecX x_;
   MatX p_;
-  std::function<VecX(const VecX&)> normalize_;
+  StateSpace space_;
 };
 
 }  // namespace roboticscore::estimation

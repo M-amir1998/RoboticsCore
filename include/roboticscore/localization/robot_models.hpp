@@ -30,8 +30,12 @@ struct VelocityNoise {
 };
 
 /// Unicycle process model; process noise is V M V^T with V = df/du (control noise mapped
-/// into state space). Residual/normalize/mean handle the heading.
+/// into state space).
 [[nodiscard]] estimation::ProcessModel unicycle_process_model(const VelocityNoise& noise);
+
+/// State space of planar poses (x, y, theta): wrapped heading residual, normalisation and a
+/// circular mean for the heading. Pass it to the EKF/UKF/particle filter.
+[[nodiscard]] estimation::StateSpace pose_state_space();
 
 /// Range and bearing to a known point landmark. The Jacobian is undefined when the robot
 /// sits on the landmark; it throws NumericalError for ranges below 1e-9 m.

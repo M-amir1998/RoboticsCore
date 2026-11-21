@@ -31,6 +31,9 @@ roboticscore_add_library(
   SOURCES estimation/consistency.cpp
           estimation/extended_kalman_filter.cpp
           estimation/kalman_filter.cpp
+          estimation/particle_filter.cpp
+          estimation/resampling.cpp
+          estimation/unscented_kalman_filter.cpp
           localization/robot_models.cpp
   PUBLIC_DEPS roboticscore_core)
 

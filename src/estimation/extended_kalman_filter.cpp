@@ -9,7 +9,8 @@
 
 namespace roboticscore::estimation {
 
-ExtendedKalmanFilter::ExtendedKalmanFilter(VecX x0, MatX p0) {
+ExtendedKalmanFilter::ExtendedKalmanFilter(VecX x0, MatX p0, StateSpace space)
+    : space_(std::move(space)) {
   reset(std::move(x0), std::move(p0));
 }
 
@@ -31,8 +32,8 @@ void ExtendedKalmanFilter::predict(const ProcessModel& model, const VecX& u, dou
     f_jac = model.jacobian(x_, u, dt);
   } else {
     const auto f = [&](const VecX& x) { return model.f(x, u, dt); };
-    f_jac = model.residual ? math::numerical_jacobian(f, x_, model.residual)
-                           : math::numerical_jacobian(f, x_);
+    f_jac = space_.residual ? math::numerical_jacobian(f, x_, space_.residual)
+                            : math::numerical_jacobian(f, x_);
   }
   const MatX q = model.noise(x_, u, dt);
   detail::require(f_jac.rows() == n && f_jac.cols() == n,
@@ -42,10 +43,7 @@ void ExtendedKalmanFilter::predict(const ProcessModel& model, const VecX& u, dou
 
   VecX x_next = model.f(x_, u, dt);
   detail::require(x_next.size() == n, "ExtendedKalmanFilter::predict: f changed the dimension");
-  if (model.normalize) {
-    x_next = model.normalize(x_next);
-  }
-  x_ = std::move(x_next);
+  x_ = space_.canonical(x_next);
   p_ = math::symmetrize(f_jac * p_ * f_jac.transpose() + q);
 }
 
@@ -65,8 +63,8 @@ UpdateResult ExtendedKalmanFilter::update(const MeasurementModel& model, const V
   }
   const VecX y = model.residual ? model.residual(z, z_pred) : VecX(z - z_pred);
   UpdateResult result = kalman_update(x_, p_, y, h_jac, model.noise, gate);
-  if (result.accepted && normalize_) {
-    x_ = normalize_(x_);
+  if (result.accepted) {
+    x_ = space_.canonical(x_);
   }
   return result;
 }
