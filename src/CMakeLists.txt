@@ -48,7 +48,8 @@ roboticscore_add_library(
 # planning: grid, sampling-based, kinodynamic and local planners.
 roboticscore_add_library(
   planning
-  SOURCES planning/grid/grid_map.cpp
+  SOURCES planning/grid/dstar_lite.cpp
+          planning/grid/grid_map.cpp
           planning/grid/grid_search.cpp
   PUBLIC_DEPS roboticscore_core)
 
