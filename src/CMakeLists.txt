@@ -72,6 +72,14 @@ roboticscore_add_library(
           trajectory/tracks.cpp
   PUBLIC_DEPS roboticscore_core)
 
+# control: PID and path-tracking controllers (Pure Pursuit, Stanley, LQR, MPC).
+roboticscore_add_library(
+  control
+  SOURCES control/geometric_trackers.cpp
+          control/path_tracking.cpp
+          control/pid.cpp
+  PUBLIC_DEPS roboticscore_core roboticscore_trajectory)
+
 # sim: deterministic 2D simulator, sensors and benchmark scenario generators.
 roboticscore_add_library(
   sim
@@ -82,7 +90,7 @@ roboticscore_add_library(
 
 add_library(roboticscore_all INTERFACE)
 set_target_properties(roboticscore_all PROPERTIES EXPORT_NAME RoboticsCore)
-target_link_libraries(roboticscore_all INTERFACE roboticscore_core roboticscore_estimation
+target_link_libraries(roboticscore_all INTERFACE roboticscore_control roboticscore_core roboticscore_estimation
                                                  roboticscore_mapping roboticscore_planning
                                                  roboticscore_sim roboticscore_trajectory)
 add_library(RoboticsCore::RoboticsCore ALIAS roboticscore_all)
