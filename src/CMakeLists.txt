@@ -82,6 +82,14 @@ roboticscore_add_library(
           control/pid.cpp
   PUBLIC_DEPS roboticscore_core roboticscore_trajectory)
 
+# slam: EKF-SLAM, FastSLAM and pose-graph optimisation.
+roboticscore_add_library(
+  slam
+  SOURCES slam/ekf_slam.cpp
+          slam/fastslam.cpp
+          slam/pose_graph.cpp
+  PUBLIC_DEPS roboticscore_estimation roboticscore_mapping)
+
 # sim: deterministic 2D simulator, sensors and benchmark scenario generators.
 roboticscore_add_library(
   sim
@@ -93,6 +101,6 @@ roboticscore_add_library(
 add_library(roboticscore_all INTERFACE)
 set_target_properties(roboticscore_all PROPERTIES EXPORT_NAME RoboticsCore)
 target_link_libraries(roboticscore_all INTERFACE roboticscore_control roboticscore_core roboticscore_estimation
-                                                 roboticscore_mapping roboticscore_planning
+                                                 roboticscore_mapping roboticscore_planning roboticscore_slam
                                                  roboticscore_sim roboticscore_trajectory)
 add_library(RoboticsCore::RoboticsCore ALIAS roboticscore_all)
