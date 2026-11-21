@@ -53,11 +53,11 @@ UpdateResult kalman_update(VecX& x, MatX& p, const VecX& y, const MatX& h, const
   return result;
 }
 
-KalmanFilter::KalmanFilter(VecX x0, MatX p0) {
-  reset(std::move(x0), std::move(p0));
+KalmanFilter::KalmanFilter(VecX x0, const MatX& p0) {
+  reset(std::move(x0), p0);
 }
 
-void KalmanFilter::reset(VecX x, MatX p) {
+void KalmanFilter::reset(VecX x, const MatX& p) {
   detail::require(x.allFinite(), "KalmanFilter: state must be finite");
   validate_covariance(p, x.size(), "KalmanFilter");
   x_ = std::move(x);

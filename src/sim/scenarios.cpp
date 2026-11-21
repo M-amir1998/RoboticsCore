@@ -72,8 +72,11 @@ Scenario narrow_passage_scenario(double gap) {
 Scenario maze_scenario(std::uint64_t seed, int cells_x, int cells_y, double cell_size) {
   detail::require(cells_x >= 2 && cells_y >= 2, "maze_scenario: at least 2x2 cells required");
   detail::require(cell_size > 0.5, "maze_scenario: cell_size must exceed the wall thickness");
-  const auto idx = [&](int x, int y) { return static_cast<std::size_t>(y * cells_x + x); };
-  const auto total = static_cast<std::size_t>(cells_x * cells_y);
+  const auto idx = [&](int x, int y) {
+    return static_cast<std::size_t>(y) * static_cast<std::size_t>(cells_x)
+           + static_cast<std::size_t>(x);
+  };
+  const auto total = static_cast<std::size_t>(cells_x) * static_cast<std::size_t>(cells_y);
   // open_right[c] / open_up[c]: passage from cell c to its +x / +y neighbour.
   std::vector<bool> open_right(total, false);
   std::vector<bool> open_up(total, false);

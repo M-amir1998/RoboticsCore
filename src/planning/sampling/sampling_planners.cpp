@@ -60,7 +60,7 @@ class Tree {
 
   [[nodiscard]] std::vector<Vec2> path_to(std::size_t n) const {
     std::vector<Vec2> path;
-    for (std::ptrdiff_t i = static_cast<std::ptrdiff_t>(n); i >= 0;
+    for (auto i = static_cast<std::ptrdiff_t>(n); i >= 0;
          i = nodes_[static_cast<std::size_t>(i)].parent) {
       path.push_back(nodes_[static_cast<std::size_t>(i)].point);
     }
@@ -193,6 +193,7 @@ SamplingResult rrt_star_impl(const geometry::Environment2D& env, const Vec2& sta
       x_rand = ctx.biased(goal);
     }
     const auto nn = tree.index().nearest(x_rand);
+    if (!nn) continue;  // unreachable: the tree always contains the root
     const Vec2 x_nearest = tree.node(nn->id).point;
     const Vec2 x_new = ctx.steer(x_nearest, x_rand);
     if ((x_new - x_nearest).squaredNorm() == 0.0 || !ctx.segment_free(x_nearest, x_new)) {
@@ -319,6 +320,7 @@ SamplingResult rrt(const geometry::Environment2D& env, const Vec2& start, const 
     result.iterations = static_cast<std::size_t>(it);
     const Vec2 x_rand = ctx.biased(goal);
     const auto nn = tree.index().nearest(x_rand);
+    if (!nn) continue;  // unreachable: the tree always contains the root
     const Vec2 x_near = tree.node(nn->id).point;
     const Vec2 x_new = ctx.steer(x_near, x_rand);
     if ((x_new - x_near).squaredNorm() == 0.0 || !ctx.segment_free(x_near, x_new)) {
@@ -362,6 +364,7 @@ SamplingResult rrt_connect(const geometry::Environment2D& env, const Vec2& start
   enum class Status { kTrapped, kAdvanced, kReached };
   const auto extend = [&](int t, const Vec2& target, std::size_t& new_id) {
     const auto nn = trees[t].index().nearest(target);
+    if (!nn) return Status::kTrapped;  // unreachable: trees contain their root
     const Vec2 x_near = trees[t].node(nn->id).point;
     const Vec2 x_new = ctx.steer(x_near, target);
     if ((x_new - x_near).squaredNorm() == 0.0) {

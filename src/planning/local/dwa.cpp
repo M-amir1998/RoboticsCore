@@ -38,11 +38,12 @@ double arc_free_distance(const geometry::Pose2& pose, double kappa, double direc
                          double radius, const geometry::Environment2D& env,
                          std::span<const geometry::Circle> dynamic) {
   constexpr double kStep = 0.05;
-  for (double s = kStep; s <= cap + 1e-12; s += kStep) {
-    const double d = direction * s;
+  const int steps = static_cast<int>(std::floor(cap / kStep + 1e-9));
+  for (int i = 1; i <= steps; ++i) {
+    const double d = direction * kStep * i;
     const geometry::Pose2 p = models::Unicycle::step(pose, {d, d * kappa}, 1.0);
     if (clearance_at(p.translation(), env, dynamic) - radius <= 0.0) {
-      return s - kStep;
+      return kStep * (i - 1);
     }
   }
   return cap;

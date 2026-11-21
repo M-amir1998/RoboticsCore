@@ -207,7 +207,9 @@ struct Collector {
   }
 
   void csc() {
-    double t = 0, u = 0, v = 0;
+    double t = 0.0;
+    double u = 0.0;
+    double v = 0.0;
     const std::array<RS, 5> lsl{RS::kLeft, RS::kStraight, RS::kLeft};
     const std::array<RS, 5> rsr{RS::kRight, RS::kStraight, RS::kRight};
     const std::array<RS, 5> lsr{RS::kLeft, RS::kStraight, RS::kRight};
@@ -223,7 +225,9 @@ struct Collector {
   }
 
   void ccc() {
-    double t = 0, u = 0, v = 0;
+    double t = 0.0;
+    double u = 0.0;
+    double v = 0.0;
     const std::array<RS, 5> lrl{RS::kLeft, RS::kRight, RS::kLeft};
     const std::array<RS, 5> rlr{RS::kRight, RS::kLeft, RS::kRight};
     if (lp_rm_l(x, y, phi, t, u, v)) add(lrl, {t, u, v}, 3);
@@ -240,7 +244,9 @@ struct Collector {
   }
 
   void cccc() {
-    double t = 0, u = 0, v = 0;
+    double t = 0.0;
+    double u = 0.0;
+    double v = 0.0;
     const std::array<RS, 5> lrlr{RS::kLeft, RS::kRight, RS::kLeft, RS::kRight};
     const std::array<RS, 5> rlrl{RS::kRight, RS::kLeft, RS::kRight, RS::kLeft};
     if (lp_rup_lum_rm(x, y, phi, t, u, v)) add(lrlr, {t, u, -u, v}, 4);
@@ -254,7 +260,9 @@ struct Collector {
   }
 
   void ccsc() {
-    double t = 0, u = 0, v = 0;
+    double t = 0.0;
+    double u = 0.0;
+    double v = 0.0;
     const std::array<RS, 5> lrsl{RS::kLeft, RS::kRight, RS::kStraight, RS::kLeft};
     const std::array<RS, 5> rlsr{RS::kRight, RS::kLeft, RS::kStraight, RS::kRight};
     const std::array<RS, 5> lrsr{RS::kLeft, RS::kRight, RS::kStraight, RS::kRight};
@@ -285,7 +293,9 @@ struct Collector {
   }
 
   void ccscc() {
-    double t = 0, u = 0, v = 0;
+    double t = 0.0;
+    double u = 0.0;
+    double v = 0.0;
     const std::array<RS, 5> lrslr{RS::kLeft, RS::kRight, RS::kStraight, RS::kLeft, RS::kRight};
     const std::array<RS, 5> rlsrl{RS::kRight, RS::kLeft, RS::kStraight, RS::kRight, RS::kLeft};
     if (lp_rm_s_lm_rp(x, y, phi, t, u, v)) add(lrslr, {t, -kHalfPi, u, -kHalfPi, v}, 5);

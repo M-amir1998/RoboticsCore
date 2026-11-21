@@ -144,7 +144,7 @@ TEST(OccupancyGrid, ScanMappingRecoversRoom) {
   const GridSpec spec(50, 40, 0.2);
   OccupancyGrid grid(spec);
   math::Random rng(1);
-  for (const Vec2 p : {Vec2(2, 2), Vec2(8, 2), Vec2(8, 6), Vec2(2, 6)}) {
+  for (const Vec2& p : {Vec2(2, 2), Vec2(8, 2), Vec2(8, 6), Vec2(2, 6)}) {
     const geometry::Pose2 pose(p.x(), p.y(), 0.0);
     const auto scan = lidar.scan(pose, world, rng);
     grid.integrate_scan(pose, scan.angles, scan.ranges, lidar.max_range);

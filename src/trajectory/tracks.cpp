@@ -57,19 +57,19 @@ std::vector<Vec2> rounded_polyline(const std::vector<Vec2>& corners, double r, d
     const Vec2 from = out.back();
     const int n_line = std::max(1, static_cast<int>(std::ceil((a - from).norm() / step)));
     for (int k = 1; k <= n_line; ++k)
-      out.push_back(from + (a - from) * (double(k) / n_line));
+      out.emplace_back(from + (a - from) * (double(k) / n_line));
     const double start_angle = std::atan2(a.y() - center.y(), a.x() - center.x());
     const int n_arc = std::max(2, static_cast<int>(std::ceil(r * std::abs(turn) / step)));
     for (int k = 1; k <= n_arc; ++k) {
       const double ang = start_angle + turn * k / n_arc;
-      out.push_back(center + r * Vec2(std::cos(ang), std::sin(ang)));
+      out.emplace_back(center + r * Vec2(std::cos(ang), std::sin(ang)));
     }
   }
   const Vec2 from = out.back();
-  const Vec2 to = corners.back();
+  const Vec2& to = corners.back();
   const int n_line = std::max(1, static_cast<int>(std::ceil((to - from).norm() / step)));
   for (int k = 1; k <= n_line; ++k)
-    out.push_back(from + (to - from) * (double(k) / n_line));
+    out.emplace_back(from + (to - from) * (double(k) / n_line));
   return out;
 }
 

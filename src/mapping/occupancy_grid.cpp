@@ -84,7 +84,7 @@ void OccupancyGrid::integrate_scan(const geometry::Pose2& sensor_pose,
   detail::require(angles.size() == ranges.size(),
                   "OccupancyGrid::integrate_scan: angles and ranges must match");
   detail::require(max_range > 0.0, "OccupancyGrid::integrate_scan: max_range must be positive");
-  const Vec2 origin = sensor_pose.translation();
+  const Vec2& origin = sensor_pose.translation();
   for (std::size_t i = 0; i < angles.size(); ++i) {
     const double r = ranges[i];
     if (!std::isfinite(r) || r < 0.0) {

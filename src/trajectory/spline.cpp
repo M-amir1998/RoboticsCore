@@ -147,7 +147,7 @@ BSpline::BSpline(std::vector<Vec2> control_points, int degree)
   detail::require(points_.size() >= static_cast<std::size_t>(degree) + 1,
                   "BSpline: need at least degree + 1 control points");
   const std::size_t n = points_.size();
-  const std::size_t p = static_cast<std::size_t>(degree);
+  const auto p = static_cast<std::size_t>(degree);
   // Clamped uniform knot vector with n + p + 1 entries.
   knots_.assign(n + p + 1, 0.0);
   const std::size_t interior = n - p - 1;
@@ -223,10 +223,10 @@ Vec2 BezierCurve::evaluate(double t) const {
 }
 
 BezierCurve BezierCurve::derivative() const {
-  const double n = static_cast<double>(points_.size() - 1);
+  const auto n = static_cast<double>(points_.size() - 1);
   std::vector<Vec2> d;
   for (std::size_t i = 0; i + 1 < points_.size(); ++i) {
-    d.push_back(n * (points_[i + 1] - points_[i]));
+    d.emplace_back(n * (points_[i + 1] - points_[i]));
   }
   if (d.size() == 1) {
     d.push_back(d.front());  // constant derivative represented as a degree-1 curve

@@ -10,6 +10,12 @@ namespace {
 
 constexpr double kInf = std::numeric_limits<double>::infinity();
 
+int sign_of(double v) {
+  if (v > 0.0) return 1;
+  if (v < 0.0) return -1;
+  return 0;
+}
+
 // Liang-Barsky clipping of p0 + t (p1 - p0), t in [0, 1], against [0, w] x [0, h].
 bool clip_segment(Vec2& p0, Vec2& p1, double w, double h) {
   const Vec2 d = p1 - p0;
@@ -86,8 +92,8 @@ std::vector<GridIndex> traverse_grid(const GridSpec& spec, const Vec2& from, con
   GridIndex c = cell_of(g0);
   const GridIndex end = cell_of(g1);
   const Vec2 d = g1 - g0;
-  const int sx = d.x() > 0.0 ? 1 : (d.x() < 0.0 ? -1 : 0);
-  const int sy = d.y() > 0.0 ? 1 : (d.y() < 0.0 ? -1 : 0);
+  const int sx = sign_of(d.x());
+  const int sy = sign_of(d.y());
   // Parametric distance (t in [0, 1]) to the first vertical/horizontal cell boundary and the
   // distance between successive boundaries.
   double t_max_x = kInf;

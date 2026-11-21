@@ -16,10 +16,11 @@ constexpr std::uint64_t kLidarStream = 5;
 
 }  // namespace
 
-Simulation::Simulation(World world, const geometry::Pose2& initial_pose, SimulationConfig config)
+Simulation::Simulation(World world, const geometry::Pose2& initial_pose,
+                       const SimulationConfig& config)
     : world_(std::move(world)),
       pose_(initial_pose),
-      config_(std::move(config)),
+      config_(config),
       actuation_rng_(math::Random(config_.seed).derive(kActuationStream)),
       odometry_rng_(math::Random(config_.seed).derive(kOdometryStream)),
       landmark_rng_(math::Random(config_.seed).derive(kLandmarkStream)),

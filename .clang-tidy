@@ -18,6 +18,8 @@ Checks: >
   -misc-include-cleaner,
   -misc-use-internal-linkage,
   modernize-*,
+  -modernize-pass-by-value,
+  -modernize-macro-to-enum,
   -modernize-use-trailing-return-type,
   -modernize-use-nodiscard,
   -modernize-avoid-c-arrays,
@@ -26,6 +28,7 @@ Checks: >
   performance-*,
   -performance-enum-size,
   readability-*,
+  -readability-use-anyofallof,
   -readability-identifier-length,
   -readability-magic-numbers,
   -readability-function-cognitive-complexity,
@@ -35,6 +38,10 @@ Checks: >
   -readability-convert-member-functions-to-static,
   -readability-suspicious-call-argument
 
+# modernize-pass-by-value: Eigen recommends passing fixed-size vectorisable types by const
+#   reference; by-value sinks would copy small Eigen objects without benefit.
+# modernize-macro-to-enum: the ROBOTICSCORE_VERSION_* macros must stay usable in #if.
+# readability-use-anyofallof: explicit early-return loops read better in collision checks.
 # Numerical code uses short math names (x, P, Q, R, dt) by design; see the
 # disabled identifier-length check above.
 

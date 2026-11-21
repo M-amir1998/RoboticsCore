@@ -9,12 +9,12 @@
 
 namespace roboticscore::estimation {
 
-ExtendedKalmanFilter::ExtendedKalmanFilter(VecX x0, MatX p0, StateSpace space)
+ExtendedKalmanFilter::ExtendedKalmanFilter(VecX x0, const MatX& p0, StateSpace space)
     : space_(std::move(space)) {
-  reset(std::move(x0), std::move(p0));
+  reset(std::move(x0), p0);
 }
 
-void ExtendedKalmanFilter::reset(VecX x, MatX p) {
+void ExtendedKalmanFilter::reset(VecX x, const MatX& p) {
   detail::require(x.allFinite(), "ExtendedKalmanFilter: state must be finite");
   validate_covariance(p, x.size(), "ExtendedKalmanFilter");
   x_ = std::move(x);

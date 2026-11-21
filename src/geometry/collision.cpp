@@ -21,7 +21,9 @@ bool on_segment_box(const Vec2& q, const Segment& s) {
 }
 
 int sign(double v) {
-  return (v > 0.0) - (v < 0.0);
+  if (v > 0.0) return 1;
+  if (v < 0.0) return -1;
+  return 0;
 }
 
 }  // namespace

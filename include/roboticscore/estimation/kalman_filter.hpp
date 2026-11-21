@@ -22,7 +22,7 @@ class KalmanFilter {
  public:
   /// @throws std::invalid_argument if P0 is not square, symmetric and positive semidefinite
   ///         with the dimension of x0.
-  KalmanFilter(VecX x0, MatX p0);
+  KalmanFilter(VecX x0, const MatX& p0);
 
   /// Time update without control input.
   /// @throws std::invalid_argument on dimension mismatch.
@@ -43,7 +43,7 @@ class KalmanFilter {
   [[nodiscard]] Index dimension() const noexcept { return x_.size(); }
 
   /// Replaces the estimate. Same validation as the constructor.
-  void reset(VecX x, MatX p);
+  void reset(VecX x, const MatX& p);
 
  private:
   VecX x_;

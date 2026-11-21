@@ -23,7 +23,7 @@ namespace roboticscore::estimation {
 class ExtendedKalmanFilter {
  public:
   /// @throws std::invalid_argument for an invalid initial covariance.
-  ExtendedKalmanFilter(VecX x0, MatX p0, StateSpace space = {});
+  ExtendedKalmanFilter(VecX x0, const MatX& p0, StateSpace space = {});
 
   /// Propagates the estimate through @p model.
   /// @throws std::invalid_argument if the model has no transition function or returns
@@ -40,7 +40,7 @@ class ExtendedKalmanFilter {
 
   [[nodiscard]] const StateSpace& state_space() const noexcept { return space_; }
 
-  void reset(VecX x, MatX p);
+  void reset(VecX x, const MatX& p);
 
  private:
   VecX x_;

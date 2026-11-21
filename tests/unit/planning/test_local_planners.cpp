@@ -127,7 +127,7 @@ TEST(PotentialField, ForceIsNegativeGradientOfPotential) {
   env.add_obstacle(Circle{{5, 5}, 1.0});
   const PotentialFieldConfig cfg;
   const Vec2 goal(9, 9);
-  for (const Vec2 p : {Vec2(3.5, 5.2), Vec2(2, 2), Vec2(5, 7.2)}) {
+  for (const Vec2& p : {Vec2(3.5, 5.2), Vec2(2, 2), Vec2(5, 7.2)}) {
     constexpr double h = 1e-5;
     const Vec2 grad(
         (potential(p + Vec2(h, 0), goal, env, cfg) - potential(p - Vec2(h, 0), goal, env, cfg))

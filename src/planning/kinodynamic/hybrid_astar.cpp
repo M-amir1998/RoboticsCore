@@ -4,6 +4,7 @@
 #include <cmath>
 #include <cstdint>
 #include <limits>
+#include <numbers>
 #include <queue>
 
 #include "roboticscore/core/error.hpp"
@@ -73,7 +74,7 @@ class HolonomicHeuristic {
       for (int k = 0; k < 8; ++k) {
         const geometry::GridIndex n{c.x + kDx[k], c.y + kDy[k]};
         if (!spec_.in_bounds(n) || blocked[spec_.linear_index(n)] != 0) continue;
-        const double step = (k < 4 ? 1.0 : std::sqrt(2.0)) * resolution;
+        const double step = (k < 4 ? 1.0 : std::numbers::sqrt2) * resolution;
         const std::size_t ni = spec_.linear_index(n);
         if (d + step < dist_[ni]) {
           dist_[ni] = d + step;
@@ -153,6 +154,7 @@ HybridAStarResult HybridAStar::plan(const geometry::Pose2& start,
   };
 
   std::vector<double> steers;
+  steers.reserve(static_cast<std::size_t>(config_.steering_samples));
   const double max_steer = vehicle_.params().max_steer;
   for (int i = 0; i < config_.steering_samples; ++i) {
     steers.push_back(-max_steer + 2.0 * max_steer * i / (config_.steering_samples - 1));

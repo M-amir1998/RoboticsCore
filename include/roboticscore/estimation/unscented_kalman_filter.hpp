@@ -45,7 +45,8 @@ struct SigmaPoints {
 class UnscentedKalmanFilter {
  public:
   /// @throws std::invalid_argument for an invalid initial covariance.
-  UnscentedKalmanFilter(VecX x0, MatX p0, SigmaPointParams params = {}, StateSpace space = {});
+  UnscentedKalmanFilter(VecX x0, const MatX& p0, SigmaPointParams params = {},
+                        StateSpace space = {});
 
   /// Unscented transform of the state through the process model.
   void predict(const ProcessModel& model, const VecX& u, double dt);
@@ -58,7 +59,7 @@ class UnscentedKalmanFilter {
   [[nodiscard]] const MatX& covariance() const noexcept { return p_; }
   [[nodiscard]] const SigmaPointParams& params() const noexcept { return params_; }
 
-  void reset(VecX x, MatX p);
+  void reset(VecX x, const MatX& p);
 
  private:
   VecX x_;

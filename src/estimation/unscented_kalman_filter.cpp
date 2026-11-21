@@ -37,13 +37,13 @@ SigmaPoints merwe_sigma_points(const VecX& mean, const MatX& covariance,
   return sp;
 }
 
-UnscentedKalmanFilter::UnscentedKalmanFilter(VecX x0, MatX p0, SigmaPointParams params,
+UnscentedKalmanFilter::UnscentedKalmanFilter(VecX x0, const MatX& p0, SigmaPointParams params,
                                              StateSpace space)
     : params_(params), space_(std::move(space)) {
-  reset(std::move(x0), std::move(p0));
+  reset(std::move(x0), p0);
 }
 
-void UnscentedKalmanFilter::reset(VecX x, MatX p) {
+void UnscentedKalmanFilter::reset(VecX x, const MatX& p) {
   detail::require(x.allFinite(), "UnscentedKalmanFilter: state must be finite");
   validate_covariance(p, x.size(), "UnscentedKalmanFilter");
   x_ = std::move(x);

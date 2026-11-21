@@ -51,6 +51,12 @@ std::vector<GridIndex> reconstruct(const GridSpec& spec, const std::vector<std::
   return cells;
 }
 
+int sign_of(int v) {
+  if (v > 0) return 1;
+  if (v < 0) return -1;
+  return 0;
+}
+
 double euclid(const GridIndex& a, const GridIndex& b) {
   return std::hypot(a.x - b.x, a.y - b.y);
 }
@@ -138,8 +144,8 @@ bool line_of_sight(const GridMap& map, const GridIndex& a, const GridIndex& b) {
   // boundaries, so the start cell is unambiguous.
   const int dx = b.x - a.x;
   const int dy = b.y - a.y;
-  const int sx = dx > 0 ? 1 : (dx < 0 ? -1 : 0);
-  const int sy = dy > 0 ? 1 : (dy < 0 ? -1 : 0);
+  const int sx = sign_of(dx);
+  const int sy = sign_of(dy);
   const double t_delta_x = dx != 0 ? 1.0 / std::abs(dx) : kInf;
   const double t_delta_y = dy != 0 ? 1.0 / std::abs(dy) : kInf;
   double t_max_x = dx != 0 ? 0.5 * t_delta_x : kInf;

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <numbers>
 #include <stdexcept>
 #include <utility>
 
@@ -11,7 +12,7 @@
 namespace roboticscore::planning {
 namespace {
 
-constexpr double kSqrt2 = 1.4142135623730951;
+constexpr double kSqrt2 = std::numbers::sqrt2;
 
 constexpr std::array<GridIndex, 4> kFourOffsets = {{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}};
 constexpr std::array<GridIndex, 8> kEightOffsets = {

@@ -108,8 +108,10 @@ VehicleCommand LqrTracker::compute(const models::BicycleState& state,
   const auto proj = track_point(Vec2(state(0), state(1)), state(2), path);
   status_.target = proj.point;
   // Gain-schedule on the current speed; use the reference direction when nearly stopped.
-  const double direction =
-      std::abs(v) > 1e-3 ? (v > 0.0 ? 1.0 : -1.0) : (status_.reference_speed < 0.0 ? -1.0 : 1.0);
+  double direction = status_.reference_speed < 0.0 ? -1.0 : 1.0;
+  if (std::abs(v) > 1e-3) {
+    direction = v > 0.0 ? 1.0 : -1.0;
+  }
   const double v_gain = direction * std::max(std::abs(v), config_.min_gain_speed);
   const double delta_ff =
       config_.curvature_feedforward ? std::atan(vehicle_.wheelbase * proj.curvature) : 0.0;

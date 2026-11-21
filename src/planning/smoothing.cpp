@@ -26,7 +26,7 @@ std::vector<Vec2> resample_polyline(const std::vector<Vec2>& path, double spacin
     const Vec2 d = path[i] - path[i - 1];
     const int n = std::max(1, static_cast<int>(std::ceil(d.norm() / spacing)));
     for (int k = 1; k <= n; ++k) {
-      out.push_back(path[i - 1] + d * (static_cast<double>(k) / n));
+      out.emplace_back(path[i - 1] + d * (static_cast<double>(k) / n));
     }
   }
   return out;

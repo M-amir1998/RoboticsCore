@@ -44,7 +44,7 @@ struct StepResult {
 class Simulation {
  public:
   /// @throws std::invalid_argument for non-positive dt or robot radius.
-  Simulation(World world, const geometry::Pose2& initial_pose, SimulationConfig config);
+  Simulation(World world, const geometry::Pose2& initial_pose, const SimulationConfig& config);
 
   /// Applies @p command for one time step and advances dynamic obstacles.
   StepResult step(const models::UnicycleInput& command);
