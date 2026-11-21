@@ -60,6 +60,16 @@ roboticscore_add_library(
           planning/smoothing.cpp
   PUBLIC_DEPS roboticscore_core)
 
+# trajectory: polynomials, splines, time parameterisation and reference paths.
+roboticscore_add_library(
+  trajectory
+  SOURCES trajectory/polynomial.cpp
+          trajectory/reference_path.cpp
+          trajectory/spline.cpp
+          trajectory/time_parameterization.cpp
+          trajectory/tracks.cpp
+  PUBLIC_DEPS roboticscore_core)
+
 # sim: deterministic 2D simulator, sensors and benchmark scenario generators.
 roboticscore_add_library(
   sim
@@ -72,5 +82,5 @@ add_library(roboticscore_all INTERFACE)
 set_target_properties(roboticscore_all PROPERTIES EXPORT_NAME RoboticsCore)
 target_link_libraries(roboticscore_all INTERFACE roboticscore_core roboticscore_estimation
                                                  roboticscore_mapping roboticscore_planning
-                                                 roboticscore_sim)
+                                                 roboticscore_sim roboticscore_trajectory)
 add_library(RoboticsCore::RoboticsCore ALIAS roboticscore_all)
