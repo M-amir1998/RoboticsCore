@@ -108,16 +108,10 @@ TEST(KalmanFilter, MonteCarloNeesIsConsistent) {
 TEST(ExtendedKalmanFilter, ReducesToKalmanFilterForLinearModels) {
   const models::DoubleIntegrator di(1, 0.2);
   ProcessModel process;
-  process.f = [&](const VecX& x, const VecX&, double) -> VecX {
-    return di.a() * x;
-  };
-  process.noise = [&](const VecX&, const VecX&, double) -> MatX {
-    return di.process_noise(1.0);
-  };
+  process.f = [&](const VecX& x, const VecX&, double) -> VecX { return di.a() * x; };
+  process.noise = [&](const VecX&, const VecX&, double) -> MatX { return di.process_noise(1.0); };
   MeasurementModel meas;
-  meas.h = [&](const VecX& x) -> VecX {
-    return di.position_measurement() * x;
-  };
+  meas.h = [&](const VecX& x) -> VecX { return di.position_measurement() * x; };
   meas.noise = scalar(0.1);
 
   KalmanFilter kf(Vec2(0.0, 0.0), MatX::Identity(2, 2));

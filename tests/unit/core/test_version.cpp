@@ -8,7 +8,9 @@
 namespace roboticscore {
 namespace {
 
-TEST(Version, HeaderAndLibraryAgree) { EXPECT_EQ(version(), kVersionString); }
+TEST(Version, HeaderAndLibraryAgree) {
+  EXPECT_EQ(version(), kVersionString);
+}
 
 TEST(Version, IsSemanticVersion) {
   const std::string_view v = version();

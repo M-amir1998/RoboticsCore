@@ -51,12 +51,8 @@ TEST(Unicycle, JacobiansMatchNumericalIncludingZeroOmega) {
       d(2) = math::wrap_to_pi(d(2));
       return d;
     };
-    const auto fx = [&](const VecX& x) -> VecX {
-      return Unicycle::step(Vec3(x), {v, omega}, dt);
-    };
-    const auto fu = [&](const VecX& u) -> VecX {
-      return Unicycle::step(s, {u(0), u(1)}, dt);
-    };
+    const auto fx = [&](const VecX& x) -> VecX { return Unicycle::step(Vec3(x), {v, omega}, dt); };
+    const auto fu = [&](const VecX& u) -> VecX { return Unicycle::step(s, {u(0), u(1)}, dt); };
     ASSERT_MATRIX_NEAR(j.wrt_state, math::numerical_jacobian(fx, VecX(s), wrap_diff), 1e-8);
     ASSERT_MATRIX_NEAR(j.wrt_input, math::numerical_jacobian(fu, Vec2(v, omega), wrap_diff), 1e-8);
   }
@@ -125,12 +121,8 @@ TEST(KinematicBicycle, LinearizationMatchesNumericalJacobians) {
   const BicycleInput u(0.5, 0.2);
   const double dt = 0.05;
   const BicycleLinearization lin = car.linearize(x, u, dt);
-  const auto f_x = [&](const VecX& s) -> VecX {
-    return car.derivative(Vec4(s), u);
-  };
-  const auto f_u = [&](const VecX& in) -> VecX {
-    return car.derivative(x, Vec2(in));
-  };
+  const auto f_x = [&](const VecX& s) -> VecX { return car.derivative(Vec4(s), u); };
+  const auto f_u = [&](const VecX& in) -> VecX { return car.derivative(x, Vec2(in)); };
   const MatX ac = math::numerical_jacobian(f_x, VecX(x));
   const MatX bc = math::numerical_jacobian(f_u, VecX(u));
   EXPECT_MATRIX_NEAR(lin.a, MatX(Mat4::Identity() + dt * ac), 1e-9);

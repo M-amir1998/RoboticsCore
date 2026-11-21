@@ -11,7 +11,7 @@ ReferenceAlignment: Left
 AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: WithoutElse
 AllowShortLoopsOnASingleLine: false
-AllowShortLambdasOnASingleLine: Inline
+AllowShortLambdasOnASingleLine: All
 BreakBeforeBinaryOperators: NonAssignment
 BinPackArguments: true
 BinPackParameters: true

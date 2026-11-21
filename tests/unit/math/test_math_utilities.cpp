@@ -54,9 +54,7 @@ TEST(Bilinear, CornersAndCenter) {
 // --- numerical differentiation -----------------------------------------------------------
 
 TEST(NumericalDerivative, MatchesAnalytic) {
-  const auto f = [](double x) {
-    return std::sin(x) * std::exp(0.3 * x);
-  };
+  const auto f = [](double x) { return std::sin(x) * std::exp(0.3 * x); };
   const auto df = [](double x) {
     return std::cos(x) * std::exp(0.3 * x) + 0.3 * std::sin(x) * std::exp(0.3 * x);
   };
@@ -105,9 +103,7 @@ TEST(NumericalJacobian, CustomDifferenceHandlesAngleWrap) {
 
 TEST(Integrators, Rk4IsFourthOrder) {
   // dx/dt = -x, x(0) = 1 -> x(1) = e^-1.
-  const auto f = [](double, double x) {
-    return -x;
-  };
+  const auto f = [](double, double x) { return -x; };
   const auto integrate = [&](int steps) {
     double x = 1.0;
     const double dt = 1.0 / steps;
@@ -122,9 +118,7 @@ TEST(Integrators, Rk4IsFourthOrder) {
 }
 
 TEST(Integrators, EulerIsFirstOrder) {
-  const auto f = [](double, double x) {
-    return -x;
-  };
+  const auto f = [](double, double x) { return -x; };
   const auto integrate = [&](int steps) {
     double x = 1.0;
     const double dt = 1.0 / steps;
@@ -138,9 +132,7 @@ TEST(Integrators, EulerIsFirstOrder) {
 
 TEST(Integrators, Rk4WorksWithEigenState) {
   // Harmonic oscillator: energy approximately conserved over one period.
-  const auto f = [](double, const Vec2& s) {
-    return Vec2(s(1), -s(0));
-  };
+  const auto f = [](double, const Vec2& s) { return Vec2(s(1), -s(0)); };
   Vec2 s(1.0, 0.0);
   const int steps = 200;
   const double dt = 2.0 * std::acos(-1.0) / steps;

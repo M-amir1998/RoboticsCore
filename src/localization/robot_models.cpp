@@ -83,9 +83,7 @@ estimation::MeasurementModel range_bearing_model(const Vec2& landmark, double ra
   detail::require(range_std > 0.0 && bearing_std > 0.0,
                   "range_bearing_model: noise standard deviations must be positive");
   estimation::MeasurementModel model;
-  model.h = [landmark](const VecX& x) -> VecX {
-    return predict_range_bearing(Vec3(x), landmark);
-  };
+  model.h = [landmark](const VecX& x) -> VecX { return predict_range_bearing(Vec3(x), landmark); };
   model.jacobian = [landmark](const VecX& x) -> MatX {
     const double dx = landmark.x() - x(0);
     const double dy = landmark.y() - x(1);
@@ -114,9 +112,7 @@ estimation::MeasurementModel range_bearing_model(const Vec2& landmark, double ra
 estimation::MeasurementModel position_model(double position_std) {
   detail::require(position_std > 0.0, "position_model: standard deviation must be positive");
   estimation::MeasurementModel model;
-  model.h = [](const VecX& x) -> VecX {
-    return x.head<2>();
-  };
+  model.h = [](const VecX& x) -> VecX { return x.head<2>(); };
   model.jacobian = [](const VecX& x) -> MatX {
     MatX h = MatX::Zero(2, x.size());
     h(0, 0) = 1.0;

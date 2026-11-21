@@ -30,9 +30,7 @@ void ExtendedKalmanFilter::predict(const ProcessModel& model, const VecX& u, dou
   if (model.jacobian) {
     f_jac = model.jacobian(x_, u, dt);
   } else {
-    const auto f = [&](const VecX& x) {
-      return model.f(x, u, dt);
-    };
+    const auto f = [&](const VecX& x) { return model.f(x, u, dt); };
     f_jac = model.residual ? math::numerical_jacobian(f, x_, model.residual)
                            : math::numerical_jacobian(f, x_);
   }

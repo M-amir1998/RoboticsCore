@@ -2,6 +2,8 @@
 
 namespace roboticscore {
 
-std::string_view version() noexcept { return kVersionString; }
+std::string_view version() noexcept {
+  return kVersionString;
+}
 
 }  // namespace roboticscore

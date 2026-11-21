@@ -28,9 +28,7 @@ BicycleState KinematicBicycle::step(const BicycleState& x, const BicycleInput& u
   detail::require(dt >= 0.0, "KinematicBicycle::step: dt must be non-negative");
   const BicycleInput clamped(std::clamp(u(0), -params_.max_accel, params_.max_accel),
                              std::clamp(u(1), -params_.max_steer, params_.max_steer));
-  const auto f = [&](double /*t*/, const Vec4& s) -> Vec4 {
-    return derivative(s, clamped);
-  };
+  const auto f = [&](double /*t*/, const Vec4& s) -> Vec4 { return derivative(s, clamped); };
   BicycleState next = math::rk4_step(f, x, 0.0, dt);
   next(2) = math::wrap_to_pi(next(2));
   next(3) = std::clamp(next(3), -params_.max_speed, params_.max_speed);

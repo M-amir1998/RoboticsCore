@@ -74,9 +74,7 @@ TEST(StatisticsNumerics, GaussianLogPdfDoesNotUnderflow) {
 
 TEST(NumericalDiffNumerics, ScalesStepForLargeArguments) {
   // With an absolute step of 1e-6, x = 1e10 would lose all significant digits.
-  const auto f = [](double x) {
-    return x * x;
-  };
+  const auto f = [](double x) { return x * x; };
   EXPECT_NEAR(numerical_derivative(f, 1e10), 2e10, 1e2);
   EXPECT_NEAR(numerical_derivative(f, 1e-10), 2e-10, 1e-9);
 }
