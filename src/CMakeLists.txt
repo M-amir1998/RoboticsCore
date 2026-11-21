@@ -45,6 +45,13 @@ roboticscore_add_library(
           registration/icp.cpp
   PUBLIC_DEPS roboticscore_core)
 
+# planning: grid, sampling-based, kinodynamic and local planners.
+roboticscore_add_library(
+  planning
+  SOURCES planning/grid/grid_map.cpp
+          planning/grid/grid_search.cpp
+  PUBLIC_DEPS roboticscore_core)
+
 # sim: deterministic 2D simulator, sensors and benchmark scenario generators.
 roboticscore_add_library(
   sim
@@ -56,5 +63,6 @@ roboticscore_add_library(
 add_library(roboticscore_all INTERFACE)
 set_target_properties(roboticscore_all PROPERTIES EXPORT_NAME RoboticsCore)
 target_link_libraries(roboticscore_all INTERFACE roboticscore_core roboticscore_estimation
-                                                 roboticscore_mapping roboticscore_sim)
+                                                 roboticscore_mapping roboticscore_planning
+                                                 roboticscore_sim)
 add_library(RoboticsCore::RoboticsCore ALIAS roboticscore_all)
