@@ -53,7 +53,11 @@ roboticscore_add_library(
           planning/grid/grid_search.cpp
           planning/kinodynamic/hybrid_astar.cpp
           planning/kinodynamic/reeds_shepp.cpp
+          planning/local/dwa.cpp
+          planning/local/potential_field.cpp
+          planning/local/velocity_obstacles.cpp
           planning/sampling/sampling_planners.cpp
+          planning/smoothing.cpp
   PUBLIC_DEPS roboticscore_core)
 
 # sim: deterministic 2D simulator, sensors and benchmark scenario generators.
