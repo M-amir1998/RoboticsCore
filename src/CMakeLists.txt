@@ -19,6 +19,9 @@ roboticscore_add_library(
           math/linear_algebra.cpp
           math/random.cpp
           math/statistics.cpp
+          models/bicycle.cpp
+          models/double_integrator.cpp
+          models/unicycle.cpp
           spatial/kd_tree.cpp
   PUBLIC_DEPS roboticscore_eigen)
 
