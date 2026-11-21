@@ -13,8 +13,6 @@ include(RoboticsCoreOptions)
 include(CompilerWarnings)
 include(Sanitizers)
 include(Coverage)
-include(Dependencies)
-include(RoboticsCoreHelpers)
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
@@ -23,8 +21,13 @@ endif()
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Instrumentation must be configured before third-party targets (GoogleTest, Benchmark) are
+# created so that every translation unit in the build is compiled the same way.
 roboticscore_configure_sanitizers()
 roboticscore_configure_coverage()
+
+include(Dependencies)
+include(RoboticsCoreHelpers)
 
 add_subdirectory(src)
 
