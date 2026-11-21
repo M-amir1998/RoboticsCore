@@ -9,6 +9,8 @@ configure_file(${PROJECT_SOURCE_DIR}/include/roboticscore/core/version.hpp.in
 roboticscore_add_library(
   core
   SOURCES core/version.cpp
+          geometry/so2_se2.cpp
+          geometry/so3_se3.cpp
           math/angles.cpp
           math/integration.cpp
           math/interpolation.cpp
