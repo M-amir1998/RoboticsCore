@@ -37,7 +37,16 @@ roboticscore_add_library(
           localization/robot_models.cpp
   PUBLIC_DEPS roboticscore_core)
 
+# sim: deterministic 2D simulator, sensors and benchmark scenario generators.
+roboticscore_add_library(
+  sim
+  SOURCES sim/scenarios.cpp
+          sim/simulation.cpp
+          sim/world_sensors.cpp
+  PUBLIC_DEPS roboticscore_core)
+
 add_library(roboticscore_all INTERFACE)
 set_target_properties(roboticscore_all PROPERTIES EXPORT_NAME RoboticsCore)
-target_link_libraries(roboticscore_all INTERFACE roboticscore_core roboticscore_estimation)
+target_link_libraries(roboticscore_all INTERFACE roboticscore_core roboticscore_estimation
+                                                 roboticscore_sim)
 add_library(RoboticsCore::RoboticsCore ALIAS roboticscore_all)
