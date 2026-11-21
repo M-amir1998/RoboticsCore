@@ -3,8 +3,10 @@
 /// @file simulation.hpp
 /// @brief Deterministic fixed-step simulation of a unicycle robot in a World.
 ///
-/// Given the same World, initial pose, configuration and seed, every call sequence produces
-/// bit-identical results on every platform (see math::Random for why).
+/// Given the same World, initial pose, configuration and seed, a call sequence produces the
+/// same results run after run with a given build. The random streams are identical across
+/// standard libraries (see math::Random); floating-point results may still differ slightly
+/// between compilers and CPUs (docs/adr/0004-determinism.md).
 
 #include <cstdint>
 #include <vector>
