@@ -9,6 +9,12 @@ configure_file(${PROJECT_SOURCE_DIR}/include/roboticscore/core/version.hpp.in
 roboticscore_add_library(
   core
   SOURCES core/version.cpp
+          math/angles.cpp
+          math/integration.cpp
+          math/interpolation.cpp
+          math/linear_algebra.cpp
+          math/random.cpp
+          math/statistics.cpp
   PUBLIC_DEPS roboticscore_eigen)
 
 add_library(roboticscore_all INTERFACE)
