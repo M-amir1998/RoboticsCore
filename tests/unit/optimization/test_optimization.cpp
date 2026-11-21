@@ -104,8 +104,12 @@ void expect_kkt(const QpProblem& q, const QpResult& r, double tol) {
     EXPECT_GE(ax(i), q.l(i) - tol);
     EXPECT_LE(ax(i), q.u(i) + tol);
     // Complementarity: positive multipliers only at active upper bounds, negative at lower.
-    if (r.y(i) > tol) EXPECT_NEAR(ax(i), q.u(i), 10 * tol);
-    if (r.y(i) < -tol) EXPECT_NEAR(ax(i), q.l(i), 10 * tol);
+    if (r.y(i) > tol) {
+      EXPECT_NEAR(ax(i), q.u(i), 10 * tol);
+    }
+    if (r.y(i) < -tol) {
+      EXPECT_NEAR(ax(i), q.l(i), 10 * tol);
+    }
   }
   EXPECT_LT((q.p * r.x + q.q + q.a.transpose() * r.y).lpNorm<Eigen::Infinity>(), 10 * tol);
 }

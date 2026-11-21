@@ -101,7 +101,9 @@ TEST_F(HybridAStarTest, ForwardOnlyHasNoGearSwitches) {
   ASSERT_TRUE(r.found);
   // The search itself never reverses; only the final Reeds-Shepp shot could.
   for (const auto& p : r.path) {
-    if (!r.analytic_expansion) ASSERT_TRUE(p.forward);
+    if (!r.analytic_expansion) {
+      ASSERT_TRUE(p.forward);
+    }
   }
   EXPECT_GE(r.length, (Vec2(30, 20) - Vec2(5, 5)).norm());
 }

@@ -37,7 +37,9 @@ function(roboticscore_set_warnings target)
         -Wimplicit-fallthrough
         -Wmissing-declarations)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-      list(APPEND warnings -Wduplicated-cond -Wlogical-op -Wuseless-cast)
+      list(APPEND warnings -Wduplicated-cond -Wlogical-op)
+      # -Wuseless-cast is omitted: casts such as uint64_t -> size_t are needed for portability
+      # but are flagged on platforms where the two types coincide.
     endif()
     if(ROBOTICSCORE_WARNINGS_AS_ERRORS)
       list(APPEND warnings -Werror)
