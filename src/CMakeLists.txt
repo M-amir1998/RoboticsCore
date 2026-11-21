@@ -42,6 +42,7 @@ roboticscore_add_library(
   mapping
   SOURCES mapping/occupancy_grid.cpp
           mapping/raycast.cpp
+          registration/icp.cpp
   PUBLIC_DEPS roboticscore_core)
 
 # sim: deterministic 2D simulator, sensors and benchmark scenario generators.
