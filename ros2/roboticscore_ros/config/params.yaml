@@ -1,0 +1,18 @@
+grid_planner:
+  ros__parameters:
+    algorithm: astar
+    inflation_radius: 0.3
+    occupied_threshold: 65
+    unknown_is_obstacle: true
+
+path_tracker:
+  ros__parameters:
+    control_rate: 20.0
+    wheelbase: 0.5
+    max_steer: 0.6
+    max_speed: 0.5
+    max_accel: 1.0
+    max_lateral_accel: 0.5
+    lookahead_min: 0.4
+    lookahead_gain: 0.5
+    path_spacing: 0.05
