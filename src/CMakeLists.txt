@@ -37,6 +37,13 @@ roboticscore_add_library(
           localization/robot_models.cpp
   PUBLIC_DEPS roboticscore_core)
 
+# mapping: occupancy grids, grid ray traversal and scan registration.
+roboticscore_add_library(
+  mapping
+  SOURCES mapping/occupancy_grid.cpp
+          mapping/raycast.cpp
+  PUBLIC_DEPS roboticscore_core)
+
 # sim: deterministic 2D simulator, sensors and benchmark scenario generators.
 roboticscore_add_library(
   sim
@@ -48,5 +55,5 @@ roboticscore_add_library(
 add_library(roboticscore_all INTERFACE)
 set_target_properties(roboticscore_all PROPERTIES EXPORT_NAME RoboticsCore)
 target_link_libraries(roboticscore_all INTERFACE roboticscore_core roboticscore_estimation
-                                                 roboticscore_sim)
+                                                 roboticscore_mapping roboticscore_sim)
 add_library(RoboticsCore::RoboticsCore ALIAS roboticscore_all)
