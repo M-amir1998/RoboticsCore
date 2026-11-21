@@ -182,7 +182,7 @@ def main(argv: list[str] | None = None) -> int:
         render_one(by_name[name], manifest)
     manifest["assets"] = dict(sorted(manifest["assets"].items()))
     ASSETS.mkdir(parents=True, exist_ok=True)
-    MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
     return 0
 
 

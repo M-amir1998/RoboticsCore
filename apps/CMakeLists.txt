@@ -13,3 +13,6 @@ roboticscore_add_executable(
   SOURCES demos/main.cpp demos/demos_control.cpp demos/demos_estimation.cpp
           demos/demos_integrated.cpp demos/demos_planning.cpp
   DEPS roboticscore_pipelines roboticscore_json)
+
+roboticscore_add_executable(roboticscore_bench SOURCES benchmarks/bench_main.cpp
+                            DEPS roboticscore_pipelines roboticscore_json)

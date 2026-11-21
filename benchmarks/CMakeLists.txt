@@ -7,3 +7,5 @@ function(roboticscore_add_benchmark name)
   roboticscore_add_executable(${name} SOURCES ${ARG_SOURCES}
                               DEPS RoboticsCore::RoboticsCore benchmark::benchmark_main)
 endfunction()
+
+roboticscore_add_benchmark(roboticscore_microbenchmarks SOURCES micro_benchmarks.cpp)
