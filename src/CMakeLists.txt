@@ -51,6 +51,8 @@ roboticscore_add_library(
   SOURCES planning/grid/dstar_lite.cpp
           planning/grid/grid_map.cpp
           planning/grid/grid_search.cpp
+          planning/kinodynamic/hybrid_astar.cpp
+          planning/kinodynamic/reeds_shepp.cpp
           planning/sampling/sampling_planners.cpp
   PUBLIC_DEPS roboticscore_core)
 
