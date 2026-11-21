@@ -15,6 +15,13 @@
 ///
 /// Convergence: primal residual |Ax - z|_inf and dual residual |Px + q + A^T y|_inf below
 /// eps_abs + eps_rel * (scale of the respective terms).
+///
+/// The problem is first equilibrated with Ruiz scaling of variables, constraints and cost
+/// (paper, sec. 5.1); termination is always judged on the unscaled problem.
+///
+/// Step-size adaptation (paper, sec. 5.2): every adaptive_rho_interval iterations rho is
+/// rescaled by sqrt(normalised primal residual / normalised dual residual); the KKT matrix is
+/// refactorised only when rho changes by more than a factor of 5.
 
 #include "roboticscore/core/types.hpp"
 
@@ -38,6 +45,9 @@ struct QpSettings {
   double eps_rel = 1e-6;
   int max_iterations = 4000;
   double equality_rho_scale = 1e3;
+  bool adaptive_rho = true;
+  int adaptive_rho_interval = 25;
+  int scaling_iterations = 10;  ///< Ruiz equilibration passes (0 disables scaling).
 };
 
 enum class QpStatus { kSolved, kMaxIterations };
