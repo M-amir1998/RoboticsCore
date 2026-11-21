@@ -1,0 +1,117 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 3, "minor": 25, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/build/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "FETCHCONTENT_UPDATES_DISCONNECTED": "ON"
+      }
+    },
+    {
+      "name": "debug",
+      "inherits": "base",
+      "displayName": "Debug (default compiler)",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "release",
+      "inherits": "base",
+      "displayName": "Release (default compiler)",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+    {
+      "name": "clang-debug",
+      "inherits": "debug",
+      "displayName": "Debug (clang++, GNU-style warnings)",
+      "cacheVariables": { "CMAKE_CXX_COMPILER": "clang++" }
+    },
+    {
+      "name": "clang-release",
+      "inherits": "release",
+      "displayName": "Release (clang++)",
+      "cacheVariables": { "CMAKE_CXX_COMPILER": "clang++" }
+    },
+    {
+      "name": "gcc-debug",
+      "inherits": "debug",
+      "displayName": "Debug (g++)",
+      "cacheVariables": { "CMAKE_CXX_COMPILER": "g++" }
+    },
+    {
+      "name": "gcc-release",
+      "inherits": "release",
+      "displayName": "Release (g++)",
+      "cacheVariables": { "CMAKE_CXX_COMPILER": "g++" }
+    },
+    {
+      "name": "sanitize",
+      "inherits": "base",
+      "displayName": "AddressSanitizer + UndefinedBehaviorSanitizer (clang++)",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "ROBOTICSCORE_SANITIZERS": "address;undefined",
+        "ROBOTICSCORE_BUILD_BENCHMARKS": "OFF"
+      }
+    },
+    {
+      "name": "coverage",
+      "inherits": "base",
+      "displayName": "Coverage instrumentation (g++ / gcov)",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "g++",
+        "ROBOTICSCORE_ENABLE_COVERAGE": "ON",
+        "ROBOTICSCORE_BUILD_BENCHMARKS": "OFF"
+      }
+    },
+    {
+      "name": "ci-debug",
+      "inherits": "debug",
+      "displayName": "CI Debug (warnings as errors)",
+      "cacheVariables": { "ROBOTICSCORE_WARNINGS_AS_ERRORS": "ON" }
+    },
+    {
+      "name": "ci-release",
+      "inherits": "release",
+      "displayName": "CI Release (warnings as errors)",
+      "cacheVariables": { "ROBOTICSCORE_WARNINGS_AS_ERRORS": "ON" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "debug", "configurePreset": "debug", "jobs": 6 },
+    { "name": "release", "configurePreset": "release", "jobs": 6 },
+    { "name": "clang-debug", "configurePreset": "clang-debug", "jobs": 6 },
+    { "name": "clang-release", "configurePreset": "clang-release", "jobs": 6 },
+    { "name": "gcc-debug", "configurePreset": "gcc-debug", "jobs": 6 },
+    { "name": "gcc-release", "configurePreset": "gcc-release", "jobs": 6 },
+    { "name": "sanitize", "configurePreset": "sanitize", "jobs": 6 },
+    { "name": "coverage", "configurePreset": "coverage", "jobs": 6 },
+    { "name": "ci-debug", "configurePreset": "ci-debug", "jobs": 6 },
+    { "name": "ci-release", "configurePreset": "ci-release", "jobs": 6 }
+  ],
+  "testPresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "output": { "outputOnFailure": true },
+      "execution": { "jobs": 6, "noTestsAction": "error" }
+    },
+    { "name": "debug", "inherits": "base", "configurePreset": "debug" },
+    { "name": "release", "inherits": "base", "configurePreset": "release" },
+    { "name": "clang-debug", "inherits": "base", "configurePreset": "clang-debug" },
+    { "name": "clang-release", "inherits": "base", "configurePreset": "clang-release" },
+    { "name": "gcc-debug", "inherits": "base", "configurePreset": "gcc-debug" },
+    { "name": "gcc-release", "inherits": "base", "configurePreset": "gcc-release" },
+    { "name": "sanitize", "inherits": "base", "configurePreset": "sanitize" },
+    { "name": "coverage", "inherits": "base", "configurePreset": "coverage" },
+    { "name": "ci-debug", "inherits": "base", "configurePreset": "ci-debug" },
+    { "name": "ci-release", "inherits": "base", "configurePreset": "ci-release" }
+  ]
+}

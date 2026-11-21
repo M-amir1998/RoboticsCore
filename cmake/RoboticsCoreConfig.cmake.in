@@ -1,0 +1,13 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# When RoboticsCore was built against a system Eigen, consumers need it too.
+# When Eigen was bundled, its headers were installed next to RoboticsCore.
+if(NOT @ROBOTICSCORE_EIGEN_BUNDLED@)
+  find_dependency(Eigen3 3.4 CONFIG)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/RoboticsCoreTargets.cmake")
+
+check_required_components(RoboticsCore)

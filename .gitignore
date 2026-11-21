@@ -1,0 +1,71 @@
+# Build trees and CMake state
+/build/
+/build-*/
+/out/
+CMakeUserPresets.json
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+Testing/
+_deps/
+
+# Compiled artifacts
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+*.pdb
+*.ilk
+*.exp
+
+# Coverage
+*.gcda
+*.gcno
+*.profraw
+*.profdata
+coverage/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+dist/
+
+# Rendering intermediates (never commit raw frames or videos)
+/scripts/render/_frames/
+/scripts/render/_tmp/
+*.mp4
+*.mkv
+*.avi
+*.mov
+frame_*.png
+
+# Generated demo/benchmark traces (small committed results live under docs/)
+/results/
+*.trace.json
+
+# Environment, secrets, credentials
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+credentials*.json
+
+# IDE / OS state
+.vs/
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db

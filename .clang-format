@@ -1,0 +1,32 @@
+---
+Language: Cpp
+BasedOnStyle: Google
+Standard: c++20
+ColumnLimit: 100
+IndentWidth: 2
+AccessModifierOffset: -1
+DerivePointerAlignment: false
+PointerAlignment: Left
+ReferenceAlignment: Left
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: false
+AllowShortLambdasOnASingleLine: Inline
+BreakBeforeBinaryOperators: NonAssignment
+BinPackArguments: true
+BinPackParameters: true
+SpaceBeforeCpp11BracedList: false
+FixNamespaceComments: true
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Own module header first is handled by IncludeIsMainRegex; then std, third party, project.
+  - Regex: '^<[a-z_]+>$'
+    Priority: 1
+  - Regex: '^<(Eigen|unsupported|gtest|gmock|benchmark|nlohmann)/'
+    Priority: 2
+  - Regex: '^"roboticscore/'
+    Priority: 3
+  - Regex: '.*'
+    Priority: 4
+SortIncludes: CaseSensitive
+...
