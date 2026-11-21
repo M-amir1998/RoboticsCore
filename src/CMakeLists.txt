@@ -22,6 +22,8 @@ roboticscore_add_library(
           models/bicycle.cpp
           models/double_integrator.cpp
           models/unicycle.cpp
+          optimization/least_squares.cpp
+          optimization/qp_solver.cpp
           spatial/kd_tree.cpp
   PUBLIC_DEPS roboticscore_eigen)
 
