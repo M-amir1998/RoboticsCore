@@ -27,8 +27,10 @@ trajectory::PathProjection PathTracker::track_point(const Vec2& point, double ya
   status_.cross_track_error = proj.cross_track;
   status_.heading_error = math::angle_difference(yaw, proj.heading);
   status_.path_s = proj.s;
-  status_.reference_speed = path.at(proj.s).speed;
-  status_.finished = proj.s >= path.length() - 1e-6;
+  // Preview the reference speed slightly ahead: rest-to-rest profiles are exactly zero at the
+  // start, which would otherwise keep the vehicle from ever moving.
+  status_.reference_speed = path.at(proj.s + kSpeedPreview).speed;
+  status_.finished = proj.s >= path.length() - kFinishTolerance;
   status_.prediction.clear();
   return proj;
 }

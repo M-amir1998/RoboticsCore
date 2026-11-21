@@ -9,8 +9,10 @@
 ///     tan(delta) / L as curvature, and a signed reference speed (negative = reverse).
 ///   - Lateral errors are positive when the vehicle is left of the path; heading errors are
 ///     yaw - path heading.
-///   - Pure Pursuit, Stanley and LQR control steering and use a PID speed loop; MPC controls
-///     acceleration and steering jointly.
+///   - Pure Pursuit, Stanley and LQR control steering and use a PID speed loop towards the
+///     reference speed kSpeedPreview metres ahead of the projection; MPC controls acceleration
+///     and steering jointly.
+///   - A path counts as finished when the projection is within kFinishTolerance of its end.
 
 #include <cstddef>
 #include <memory>
@@ -23,6 +25,9 @@
 #include "roboticscore/trajectory/reference_path.hpp"
 
 namespace roboticscore::control {
+
+inline constexpr double kSpeedPreview = 0.5;     ///< [m]
+inline constexpr double kFinishTolerance = 0.3;  ///< [m]
 
 /// Actuator command for a car-like vehicle.
 struct VehicleCommand {
@@ -38,7 +43,7 @@ struct TrackingStatus {
   double path_s = 0.0;           ///< Arc length of the projection.
   Vec2 target = Vec2::Zero();    ///< Lookahead / reference point used.
   std::vector<Vec2> prediction;  ///< Predicted positions (MPC only).
-  bool finished = false;         ///< Projection reached the end of the path.
+  bool finished = false;         ///< Projection within kFinishTolerance of the end.
 };
 
 /// Base class of the path trackers (runtime polymorphism lets benchmarks treat all
