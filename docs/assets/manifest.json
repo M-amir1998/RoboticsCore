@@ -1,0 +1,124 @@
+{
+  "assets": {
+    "astar.gif": {
+      "description": "Dijkstra vs A* expansion, Theta* any-angle path",
+      "generator": "scripts/render/render_astar.py",
+      "demo": "astar",
+      "seed": 3,
+      "config": "configs/planning/astar.json",
+      "commit": "b25d3aa",
+      "bytes": 126142,
+      "frames": 70
+    },
+    "controllers.gif": {
+      "description": "Pure Pursuit, Stanley, LQR and MPC on one track",
+      "generator": "scripts/render/render_controllers.py",
+      "demo": "controllers",
+      "seed": 1,
+      "config": "configs/control/controllers.json",
+      "commit": "b25d3aa",
+      "bytes": 177022,
+      "frames": 102
+    },
+    "dstar_lite.gif": {
+      "description": "D* Lite repairing its plan after a wall appears",
+      "generator": "scripts/render/render_dstar_lite.py",
+      "demo": "dstar_lite",
+      "seed": 3,
+      "config": "configs/planning/dstar_lite.json",
+      "commit": "b25d3aa",
+      "bytes": 41830,
+      "frames": 74
+    },
+    "ekf_localization.gif": {
+      "description": "EKF landmark localisation vs dead reckoning",
+      "generator": "scripts/render/render_ekf_localization.py",
+      "demo": "ekf_localization",
+      "seed": 3,
+      "config": "configs/estimation/ekf_localization.json",
+      "commit": "b25d3aa",
+      "bytes": 222212,
+      "frames": 90
+    },
+    "hero.gif": {
+      "description": "Integrated mobile robot: EKF localisation, LiDAR mapping, Theta*, DWA",
+      "generator": "scripts/render/render_hero.py",
+      "demo": "hero",
+      "seed": 3,
+      "config": "configs/integrated/hero.json",
+      "commit": "b25d3aa",
+      "bytes": 587041,
+      "frames": 101
+    },
+    "icp.gif": {
+      "description": "Point-to-point vs point-to-line ICP",
+      "generator": "scripts/render/render_icp.py",
+      "demo": "icp",
+      "seed": 3,
+      "config": "configs/estimation/icp.json",
+      "commit": "b25d3aa",
+      "bytes": 110815,
+      "frames": 32
+    },
+    "parking.gif": {
+      "description": "Hybrid A* parking plan tracked by MPC",
+      "generator": "scripts/render/render_parking.py",
+      "demo": "parking",
+      "seed": 1,
+      "config": "configs/integrated/parking.json",
+      "commit": "b25d3aa",
+      "bytes": 226345,
+      "frames": 142
+    },
+    "particle_filter.gif": {
+      "description": "Particle filter localisation from a poor prior",
+      "generator": "scripts/render/render_particle_filter.py",
+      "demo": "particle_filter",
+      "seed": 3,
+      "config": "configs/estimation/particle_filter.json",
+      "commit": "b25d3aa",
+      "bytes": 212808,
+      "frames": 80
+    },
+    "pose_graph.gif": {
+      "description": "Pose-graph SLAM loop closure",
+      "generator": "scripts/render/render_pose_graph.py",
+      "demo": "pose_graph",
+      "seed": 3,
+      "config": "configs/slam/pose_graph.json",
+      "commit": "b25d3aa",
+      "bytes": 157750,
+      "frames": 81
+    },
+    "potential_field.gif": {
+      "description": "Potential field success and local-minimum failure",
+      "generator": "scripts/render/render_potential_field.py",
+      "demo": "potential_field",
+      "seed": 1,
+      "config": null,
+      "commit": "b25d3aa",
+      "bytes": 71213,
+      "frames": 60
+    },
+    "rrt_star.gif": {
+      "description": "RRT* growth and rewiring, Informed RRT* comparison",
+      "generator": "scripts/render/render_rrt_star.py",
+      "demo": "rrt_star",
+      "seed": 3,
+      "config": "configs/planning/rrt_star.json",
+      "commit": "b25d3aa",
+      "bytes": 251888,
+      "frames": 80
+    },
+    "rvo.gif": {
+      "description": "Reciprocal velocity obstacles: eight agents swap places",
+      "generator": "scripts/render/render_rvo.py",
+      "demo": "rvo",
+      "seed": 1,
+      "config": "configs/planning/rvo.json",
+      "commit": "b25d3aa",
+      "bytes": 215373,
+      "frames": 110
+    }
+  }
+}
