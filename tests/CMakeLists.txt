@@ -32,5 +32,9 @@ endfunction()
 
 roboticscore_add_test_suite(unit)
 roboticscore_add_test_suite(numerical)
-roboticscore_add_test_suite(integration)
 roboticscore_add_test_suite(regression)
+# Integration tests exercise the end-to-end pipelines, which live with the apps.
+if(TARGET roboticscore_pipelines)
+  roboticscore_add_test_suite(integration)
+  target_link_libraries(roboticscore_integration_tests PRIVATE roboticscore_pipelines)
+endif()
