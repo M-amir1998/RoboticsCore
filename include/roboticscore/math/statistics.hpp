@@ -55,7 +55,7 @@ namespace roboticscore::math {
 [[nodiscard]] double chi_squared_cdf(double x, double dof);
 
 /// Chi-square quantile (inverse CDF) for probability p in (0, 1).
-/// Solved by safeguarded bisection/Newton on chi_squared_cdf to ~1e-12 relative accuracy.
+/// Solved by bracketing and bisection on chi_squared_cdf (relative bracket width 1e-15).
 /// @throws std::invalid_argument for p outside (0, 1) or dof <= 0.
 [[nodiscard]] double chi_squared_quantile(double p, double dof);
 

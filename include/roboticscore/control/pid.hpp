@@ -9,7 +9,7 @@
 ///   - The derivative acts on the measurement (no derivative kick on setpoint steps) and is
 ///     low-pass filtered with time constant tau: D_k = a D_{k-1} - Kd (1 - a)(y_k - y_{k-1})/dt
 ///     with a = tau / (tau + dt). tau = 0 disables the filter.
-///   - The integral stores Ki * integral(e) so gain changes do not bump the output.
+///   - The integral term is stored already scaled by Ki. Gains are fixed at construction.
 ///   - Anti-windup by conditional integration (clamping) or by back-calculation with
 ///     tracking gain Kt: dI/dt = Ki e + Kt (u_sat - u).
 

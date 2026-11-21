@@ -9,9 +9,11 @@
 /// cross-covariance to the robot and to the existing map. Landmark IDs are arbitrary
 /// non-negative integers; a lookup table maps them to state indices in order of first sight.
 ///
-/// Prediction only touches the robot block and the robot-map cross-covariances, O(N); an
-/// update with one landmark costs O(N^2). EKF-SLAM is therefore practical up to a few hundred
-/// landmarks and becomes inconsistent with large heading uncertainty (linearisation errors).
+/// Prediction only touches the robot block and the robot-map cross-covariances, O(N). An
+/// update with one landmark could be done in O(N^2); this implementation uses the generic
+/// dense Joseph-form update, which costs O(N^3). EKF-SLAM is therefore practical up to a few
+/// hundred landmarks and becomes inconsistent with large heading uncertainty (linearisation
+/// errors).
 
 #include <cstddef>
 #include <optional>

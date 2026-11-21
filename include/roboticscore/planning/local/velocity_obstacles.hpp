@@ -18,7 +18,8 @@
 /// Symmetric crowds (e.g. agents swapping across a circle) admit a degenerate equilibrium in
 /// which all agents drift together, because equal velocities are always outside every RVO.
 /// When the preferred velocity is in conflict, it is rotated by a small consistent angle
-/// (side_bias, a "keep right" convention) before selection, which breaks the symmetry;
+/// (side_bias; positive values rotate counter-clockwise, so agents pass on their left) before
+/// selection, which breaks the symmetry;
 /// without it such scenarios can deadlock. Unobstructed agents keep their exact preference.
 ///
 /// This is not ORCA: ORCA replaces the cones by half-planes and solves a linear program.

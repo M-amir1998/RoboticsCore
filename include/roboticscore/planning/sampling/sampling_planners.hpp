@@ -35,8 +35,8 @@ struct SamplingConfig {
   std::uint64_t seed = 1;
   /// RRT*: stop at the first solution instead of continuing to optimise.
   bool stop_at_first_solution = false;
-  /// RRT*: multiplier on the theoretical lower bound gamma* of the rewiring radius
-  /// (values > 1 keep asymptotic optimality; Karaman & Frazzoli 2011, Thm. 38).
+  /// RRT*: multiplier on the rewiring-radius constant computed from the free-space volume
+  /// (Karaman & Frazzoli 2011; values > 1 are the conservative choice).
   double rewire_factor = 1.1;
   /// PRM: number of milestones and neighbours per milestone.
   int prm_samples = 500;
