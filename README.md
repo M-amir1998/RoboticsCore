@@ -210,14 +210,14 @@ library does not depend on ROS ([ADR 0007](docs/adr/0007-ros2-adapter.md)). The 
   uses a dense update that costs O(N³) per observation in the number of landmarks N.
 - The QP and sparse least-squares solvers are compact internal implementations. For large
   problems they are not substitutes for OSQP, Ceres or g2o.
-- The test matrix has been verified on Windows with MSVC and clang. Linux with GCC is
-  configured through presets but is not yet part of the verified matrix.
+- The test suites have been verified with MSVC and clang on Windows and with GCC 13 on Linux
+  (Ubuntu 24.04 container). macOS and other compilers have not been tested.
 - Timings are specific to the machine they were measured on and say nothing about real-time
   guarantees.
 
 ## Roadmap
 
-- Linux and GCC in the verified CI matrix, with coverage reporting.
+- Linux runs of the Jenkins pipeline, with sanitizers and coverage reporting.
 - ORCA alongside RVO.
 - Python bindings with pybind11.
 - Verification of the ROS 2 adapter against a ROS 2 distribution in CI.

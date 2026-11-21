@@ -4,7 +4,7 @@
 
 | Tool | Version | Notes |
 |---|---|---|
-| C++ compiler | C++20 | Tested with MSVC 19.50 and clang 20 on Windows; GCC 12+ is expected to work but is not part of the verified matrix yet |
+| C++ compiler | C++20 | Tested with MSVC 19.50 and clang 20 on Windows and GCC 13 on Linux |
 | CMake | 3.25+ | Presets version 6 |
 | Ninja | any recent | Generator used by all presets |
 | Python | 3.11 or 3.12 | Only for visualisation, benchmark reports and doc tooling |
