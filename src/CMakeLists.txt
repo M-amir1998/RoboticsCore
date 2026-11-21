@@ -76,6 +76,8 @@ roboticscore_add_library(
 roboticscore_add_library(
   control
   SOURCES control/geometric_trackers.cpp
+          control/lqr.cpp
+          control/mpc.cpp
           control/path_tracking.cpp
           control/pid.cpp
   PUBLIC_DEPS roboticscore_core roboticscore_trajectory)
