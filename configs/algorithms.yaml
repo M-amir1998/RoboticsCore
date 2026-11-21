@@ -1,0 +1,391 @@
+# Registry of everything RoboticsCore implements. It is the single source for the status
+# matrix in README.md. Regenerate the matrix with
+#   python scripts/docs/generate_status.py
+# and check that it is current, and that every referenced file exists, with
+#   python scripts/docs/generate_status.py --check
+#
+# status:
+#   Tested        implemented, covered by unit tests, documented
+#   Experimental  implemented, but validated only in a limited setting (see notes)
+#   Planned       not implemented yet
+# demo:      name of a `roboticscore_demo` scenario (and docs/assets/<demo>.gif), or null
+# benchmark: "scenario" = measured by roboticscore_bench, "micro" = Google Benchmark, or null
+
+categories:
+  - id: math
+    title: Math and geometry
+  - id: models
+    title: Motion models
+  - id: estimation
+    title: State estimation
+  - id: mapping
+    title: Mapping and registration
+  - id: slam
+    title: SLAM
+  - id: planning
+    title: Planning
+  - id: trajectory
+    title: Trajectories and optimisation
+  - id: control
+    title: Control
+  - id: integration
+    title: Simulation and integration
+
+algorithms:
+  # ---------------------------------------------------------------- math
+  - name: "SO(2), SE(2), SO(3), SE(3) Lie groups"
+    category: math
+    header: include/roboticscore/geometry/se2.hpp
+    status: Tested
+    tests: [tests/unit/geometry/test_se2.cpp, tests/unit/geometry/test_se3.cpp,
+            tests/numerical/test_lie_numerics.cpp]
+    docs: docs/mathematics/lie_groups.md
+    demo: null
+    benchmark: micro
+  - name: "Angles, interpolation, integration, statistics, portable RNG"
+    category: math
+    header: include/roboticscore/math/random.hpp
+    status: Tested
+    tests: [tests/unit/math/test_angles.cpp, tests/unit/math/test_math_utilities.cpp,
+            tests/unit/math/test_random.cpp, tests/numerical/test_math_numerics.cpp]
+    docs: docs/mathematics/numerical_methods.md
+    demo: null
+    benchmark: null
+  - name: "Collision primitives and 2D environment"
+    category: math
+    header: include/roboticscore/geometry/collision.hpp
+    status: Tested
+    tests: [tests/unit/geometry/test_collision.cpp]
+    docs: docs/algorithms/geometry/collision_and_spatial.md
+    demo: null
+    benchmark: null
+  - name: "k-d tree (nearest, k-nearest, radius)"
+    category: math
+    header: include/roboticscore/spatial/kd_tree.hpp
+    status: Tested
+    tests: [tests/unit/spatial/test_kd_tree.cpp]
+    docs: docs/algorithms/geometry/collision_and_spatial.md
+    demo: null
+    benchmark: micro
+
+  # -------------------------------------------------------------- models
+  - name: "Unicycle and differential drive"
+    category: models
+    header: include/roboticscore/models/unicycle.hpp
+    status: Tested
+    tests: [tests/unit/models/test_models.cpp]
+    docs: docs/algorithms/models/motion_models.md
+    demo: null
+    benchmark: null
+  - name: "Kinematic bicycle and Ackermann geometry"
+    category: models
+    header: include/roboticscore/models/bicycle.hpp
+    status: Tested
+    tests: [tests/unit/models/test_models.cpp]
+    docs: docs/algorithms/models/motion_models.md
+    demo: null
+    benchmark: null
+  - name: "Double integrator"
+    category: models
+    header: include/roboticscore/models/double_integrator.hpp
+    status: Tested
+    tests: [tests/unit/models/test_models.cpp]
+    docs: docs/algorithms/models/motion_models.md
+    demo: null
+    benchmark: null
+
+  # ---------------------------------------------------------- estimation
+  - name: "Kalman filter (Joseph form)"
+    category: estimation
+    header: include/roboticscore/estimation/kalman_filter.hpp
+    status: Tested
+    tests: [tests/unit/estimation/test_kalman_filters.cpp,
+            tests/numerical/test_estimation_control_numerics.cpp]
+    docs: docs/algorithms/estimation/kalman_filter.md
+    demo: null
+    benchmark: null
+  - name: "Extended Kalman filter"
+    category: estimation
+    header: include/roboticscore/estimation/extended_kalman_filter.hpp
+    status: Tested
+    tests: [tests/unit/estimation/test_kalman_filters.cpp]
+    docs: docs/algorithms/estimation/ekf.md
+    demo: ekf_localization
+    benchmark: scenario
+  - name: "Unscented Kalman filter"
+    category: estimation
+    header: include/roboticscore/estimation/unscented_kalman_filter.hpp
+    status: Tested
+    tests: [tests/unit/estimation/test_ukf_particle.cpp]
+    docs: docs/algorithms/estimation/ukf.md
+    demo: null
+    benchmark: scenario
+  - name: "Particle filter (multinomial, stratified, systematic, residual resampling)"
+    category: estimation
+    header: include/roboticscore/estimation/particle_filter.hpp
+    status: Tested
+    tests: [tests/unit/estimation/test_ukf_particle.cpp]
+    docs: docs/algorithms/estimation/particle_filter.md
+    demo: particle_filter
+    benchmark: scenario
+  - name: "NEES / NIS consistency and chi-square gating"
+    category: estimation
+    header: include/roboticscore/estimation/consistency.hpp
+    status: Tested
+    tests: [tests/unit/estimation/test_kalman_filters.cpp]
+    docs: docs/algorithms/estimation/kalman_filter.md
+    demo: null
+    benchmark: scenario
+
+  # ------------------------------------------------------------- mapping
+  - name: "Occupancy grid mapping (log-odds)"
+    category: mapping
+    header: include/roboticscore/mapping/occupancy_grid.hpp
+    status: Tested
+    tests: [tests/unit/mapping/test_mapping.cpp]
+    docs: docs/algorithms/mapping/occupancy_grid.md
+    demo: hero
+    benchmark: null
+  - name: "Bresenham and Amanatides-Woo grid ray casting"
+    category: mapping
+    header: include/roboticscore/mapping/raycast.hpp
+    status: Tested
+    tests: [tests/unit/mapping/test_mapping.cpp]
+    docs: docs/algorithms/mapping/occupancy_grid.md
+    demo: null
+    benchmark: null
+  - name: "ICP (point-to-point, point-to-line)"
+    category: mapping
+    header: include/roboticscore/registration/icp.hpp
+    status: Tested
+    tests: [tests/unit/mapping/test_icp.cpp]
+    docs: docs/algorithms/mapping/icp.md
+    demo: icp
+    benchmark: micro
+
+  # ---------------------------------------------------------------- slam
+  - name: "EKF-SLAM"
+    category: slam
+    header: include/roboticscore/slam/ekf_slam.hpp
+    status: Tested
+    tests: [tests/unit/slam/test_slam.cpp]
+    docs: docs/algorithms/slam/ekf_slam.md
+    demo: null
+    benchmark: scenario
+  - name: "FastSLAM 1.0 (known data association)"
+    category: slam
+    header: include/roboticscore/slam/fastslam.hpp
+    status: Tested
+    tests: [tests/unit/slam/test_slam.cpp]
+    docs: docs/algorithms/slam/fastslam.md
+    demo: null
+    benchmark: scenario
+  - name: "Pose-graph SLAM (sparse Gauss-Newton / Levenberg-Marquardt)"
+    category: slam
+    header: include/roboticscore/slam/pose_graph.hpp
+    status: Tested
+    tests: [tests/unit/slam/test_slam.cpp]
+    docs: docs/algorithms/slam/pose_graph.md
+    demo: pose_graph
+    benchmark: scenario
+
+  # ------------------------------------------------------------ planning
+  - name: "BFS, Dijkstra, A*, weighted A*"
+    category: planning
+    header: include/roboticscore/planning/grid/grid_search.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_grid_search.cpp, tests/regression/test_regression.cpp]
+    docs: docs/algorithms/planning/grid_search.md
+    demo: astar
+    benchmark: scenario
+  - name: "Theta* (any-angle)"
+    category: planning
+    header: include/roboticscore/planning/grid/grid_search.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_grid_search.cpp, tests/regression/test_regression.cpp]
+    docs: docs/algorithms/planning/grid_search.md
+    demo: astar
+    benchmark: scenario
+  - name: "D* Lite (incremental replanning)"
+    category: planning
+    header: include/roboticscore/planning/grid/dstar_lite.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_dstar_lite.cpp, tests/regression/test_regression.cpp]
+    docs: docs/algorithms/planning/dstar_lite.md
+    demo: dstar_lite
+    benchmark: null
+  - name: "PRM, RRT, RRT-Connect"
+    category: planning
+    header: include/roboticscore/planning/sampling/sampling_planners.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_sampling_planners.cpp]
+    docs: docs/algorithms/planning/sampling_planners.md
+    demo: null
+    benchmark: scenario
+  - name: "RRT*, Informed RRT*"
+    category: planning
+    header: include/roboticscore/planning/sampling/sampling_planners.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_sampling_planners.cpp]
+    docs: docs/algorithms/planning/sampling_planners.md
+    demo: rrt_star
+    benchmark: scenario
+  - name: "Reeds-Shepp curves"
+    category: planning
+    header: include/roboticscore/planning/kinodynamic/reeds_shepp.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_kinodynamic.cpp, tests/regression/test_regression.cpp]
+    docs: docs/algorithms/planning/hybrid_astar.md
+    demo: null
+    benchmark: micro
+  - name: "Hybrid A*"
+    category: planning
+    header: include/roboticscore/planning/kinodynamic/hybrid_astar.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_kinodynamic.cpp, tests/regression/test_regression.cpp]
+    docs: docs/algorithms/planning/hybrid_astar.md
+    demo: parking
+    benchmark: null
+  - name: "Path smoothing (shortcut, gradient, resampling)"
+    category: planning
+    header: include/roboticscore/planning/smoothing.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_local_planners.cpp]
+    docs: docs/algorithms/planning/path_smoothing.md
+    demo: null
+    benchmark: null
+  - name: "Dynamic Window Approach"
+    category: planning
+    header: include/roboticscore/planning/local/dwa.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_local_planners.cpp, tests/integration/test_pipelines.cpp]
+    docs: docs/algorithms/planning/local_planners.md
+    demo: hero
+    benchmark: null
+  - name: "Artificial potential fields"
+    category: planning
+    header: include/roboticscore/planning/local/potential_field.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_local_planners.cpp]
+    docs: docs/algorithms/planning/local_planners.md
+    demo: potential_field
+    benchmark: null
+  - name: "Velocity obstacles / reciprocal velocity obstacles"
+    category: planning
+    header: include/roboticscore/planning/local/velocity_obstacles.hpp
+    status: Tested
+    tests: [tests/unit/planning/test_local_planners.cpp]
+    docs: docs/algorithms/planning/local_planners.md
+    demo: rvo
+    benchmark: null
+  - name: "ORCA (optimal reciprocal collision avoidance)"
+    category: planning
+    header: null
+    status: Planned
+    tests: []
+    docs: null
+    demo: null
+    benchmark: null
+
+  # ---------------------------------------------------------- trajectory
+  - name: "Cubic / quintic polynomials, trapezoidal profile"
+    category: trajectory
+    header: include/roboticscore/trajectory/polynomial.hpp
+    status: Tested
+    tests: [tests/unit/trajectory/test_trajectory.cpp, tests/regression/test_regression.cpp]
+    docs: docs/algorithms/trajectory/trajectories.md
+    demo: null
+    benchmark: null
+  - name: "Cubic splines, B-splines, Bezier curves"
+    category: trajectory
+    header: include/roboticscore/trajectory/spline.hpp
+    status: Tested
+    tests: [tests/unit/trajectory/test_trajectory.cpp]
+    docs: docs/algorithms/trajectory/trajectories.md
+    demo: null
+    benchmark: null
+  - name: "Speed profiles and reference paths"
+    category: trajectory
+    header: include/roboticscore/trajectory/time_parameterization.hpp
+    status: Tested
+    tests: [tests/unit/trajectory/test_trajectory.cpp]
+    docs: docs/algorithms/trajectory/trajectories.md
+    demo: controllers
+    benchmark: null
+  - name: "Gauss-Newton and Levenberg-Marquardt"
+    category: trajectory
+    header: include/roboticscore/optimization/least_squares.hpp
+    status: Tested
+    tests: [tests/unit/optimization/test_optimization.cpp]
+    docs: docs/algorithms/optimization/least_squares_and_qp.md
+    demo: null
+    benchmark: null
+  - name: "ADMM quadratic programming (OSQP-style iteration)"
+    category: trajectory
+    header: include/roboticscore/optimization/qp_solver.hpp
+    status: Tested
+    tests: [tests/unit/optimization/test_optimization.cpp]
+    docs: docs/algorithms/optimization/least_squares_and_qp.md
+    demo: null
+    benchmark: null
+
+  # ------------------------------------------------------------- control
+  - name: "PID with anti-windup"
+    category: control
+    header: include/roboticscore/control/pid.hpp
+    status: Tested
+    tests: [tests/unit/control/test_pid_geometric.cpp]
+    docs: docs/algorithms/control/pid.md
+    demo: null
+    benchmark: null
+  - name: "Pure Pursuit and Stanley"
+    category: control
+    header: include/roboticscore/control/geometric_trackers.hpp
+    status: Tested
+    tests: [tests/unit/control/test_pid_geometric.cpp, tests/integration/test_pipelines.cpp]
+    docs: docs/algorithms/control/geometric_trackers.md
+    demo: controllers
+    benchmark: scenario
+  - name: "LQR (discrete Riccati equation, path tracking)"
+    category: control
+    header: include/roboticscore/control/lqr.hpp
+    status: Tested
+    tests: [tests/unit/control/test_lqr_mpc.cpp, tests/regression/test_regression.cpp]
+    docs: docs/algorithms/control/lqr.md
+    demo: controllers
+    benchmark: scenario
+  - name: "Linear time-varying MPC"
+    category: control
+    header: include/roboticscore/control/mpc.hpp
+    status: Tested
+    tests: [tests/unit/control/test_lqr_mpc.cpp, tests/integration/test_pipelines.cpp]
+    docs: docs/algorithms/control/mpc.md
+    demo: parking
+    benchmark: scenario
+
+  # --------------------------------------------------------- integration
+  - name: "Deterministic 2D simulator, sensors and scenarios"
+    category: integration
+    header: include/roboticscore/sim/simulation.hpp
+    status: Tested
+    tests: [tests/unit/sim/test_simulation.cpp, tests/integration/test_pipelines.cpp]
+    docs: docs/architecture.md
+    demo: hero
+    benchmark: scenario
+  - name: "ROS 2 adapter package"
+    category: integration
+    header: ros2/roboticscore_ros/include/roboticscore_ros/conversions.hpp
+    status: Experimental
+    tests: []
+    docs: ros2/roboticscore_ros/README.md
+    demo: null
+    benchmark: null
+    notes: "Separate ament package; see its README for what has been verified."
+  - name: "Python bindings (pybind11)"
+    category: integration
+    header: null
+    status: Planned
+    tests: []
+    docs: null
+    demo: null
+    benchmark: null
