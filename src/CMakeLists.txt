@@ -9,6 +9,8 @@ configure_file(${PROJECT_SOURCE_DIR}/include/roboticscore/core/version.hpp.in
 roboticscore_add_library(
   core
   SOURCES core/version.cpp
+          geometry/collision.cpp
+          geometry/environment.cpp
           geometry/so2_se2.cpp
           geometry/so3_se3.cpp
           math/angles.cpp
@@ -17,6 +19,7 @@ roboticscore_add_library(
           math/linear_algebra.cpp
           math/random.cpp
           math/statistics.cpp
+          spatial/kd_tree.cpp
   PUBLIC_DEPS roboticscore_eigen)
 
 add_library(roboticscore_all INTERFACE)
