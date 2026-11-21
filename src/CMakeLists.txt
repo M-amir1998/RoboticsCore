@@ -51,6 +51,7 @@ roboticscore_add_library(
   SOURCES planning/grid/dstar_lite.cpp
           planning/grid/grid_map.cpp
           planning/grid/grid_search.cpp
+          planning/sampling/sampling_planners.cpp
   PUBLIC_DEPS roboticscore_core)
 
 # sim: deterministic 2D simulator, sensors and benchmark scenario generators.
