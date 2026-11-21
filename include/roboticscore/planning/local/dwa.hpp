@@ -24,6 +24,9 @@
 ///   - The arc curvature uses max(|v|, curvature_speed_floor) as speed, so near-stationary
 ///     commands are not evaluated as arbitrarily tight (and therefore obstacle-free) circles.
 ///
+/// Moving obstacles are predicted with constant velocity along each rollout (time-aware
+/// clearance), an extension of the static formulation of the paper.
+///
 /// DWA is purely local: it can be trapped by concave obstacles (no global information), so it
 /// is normally driven by waypoints from a global planner.
 
@@ -56,6 +59,17 @@ struct DwaConfig {
   double robot_radius = 0.3;            ///< [m]
   double clearance_cap = 2.0;           ///< Clearances beyond this are scored equally [m].
   double curvature_speed_floor = 0.25;  ///< Minimum speed used to evaluate arcs [m/s].
+  /// If no command is admissible, return the rollout with the largest worst-case clearance
+  /// (result.valid stays false) instead of a zero command.
+  bool escape_when_blocked = false;
+};
+
+/// A circular obstacle moving with constant velocity. Rollouts are checked against its
+/// predicted position at each rollout time, so the planner can move out of the way of
+/// obstacles that approach the robot.
+struct MovingObstacle {
+  geometry::Circle shape;
+  Vec2 velocity = Vec2::Zero();
 };
 
 /// A scored rollout.
@@ -71,7 +85,7 @@ struct DwaCandidate {
 
 /// Result of one DWA cycle.
 struct DwaResult {
-  bool valid = false;             ///< False if no admissible command exists (stop).
+  bool valid = false;  ///< False if no admissible command exists (stop or escape, see config).
   models::UnicycleInput command;  ///< Zero velocity when invalid.
   std::vector<DwaCandidate> candidates;
   std::size_t best = 0;
@@ -81,7 +95,7 @@ struct DwaResult {
 /// @throws std::invalid_argument for invalid configuration values.
 [[nodiscard]] DwaResult dwa_plan(const geometry::Pose2& pose, const models::UnicycleInput& velocity,
                                  const Vec2& goal, const geometry::Environment2D& env,
-                                 std::span<const geometry::Circle> dynamic_obstacles,
+                                 std::span<const MovingObstacle> dynamic_obstacles,
                                  const DwaConfig& config);
 
 }  // namespace roboticscore::planning

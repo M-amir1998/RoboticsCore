@@ -23,11 +23,12 @@ void validate(const DwaConfig& c) {
   detail::require(c.curvature_speed_floor > 0.0, "DWA: curvature_speed_floor must be positive");
 }
 
+// Clearance at time t from now, with moving obstacles extrapolated at constant velocity.
 double clearance_at(const Vec2& p, const geometry::Environment2D& env,
-                    std::span<const geometry::Circle> dynamic) {
+                    std::span<const MovingObstacle> dynamic, double t = 0.0) {
   double c = env.clearance(p);
   for (const auto& o : dynamic) {
-    c = std::min(c, geometry::signed_distance(p, o));
+    c = std::min(c, (p - (o.shape.center + t * o.velocity)).norm() - o.shape.radius);
   }
   return c;
 }
@@ -36,7 +37,7 @@ double clearance_at(const Vec2& p, const geometry::Environment2D& env,
 // capped at `cap` (Fox et al.'s dist(v, omega)).
 double arc_free_distance(const geometry::Pose2& pose, double kappa, double direction, double cap,
                          double radius, const geometry::Environment2D& env,
-                         std::span<const geometry::Circle> dynamic) {
+                         std::span<const MovingObstacle> dynamic) {
   constexpr double kStep = 0.05;
   const int steps = static_cast<int>(std::floor(cap / kStep + 1e-9));
   for (int i = 1; i <= steps; ++i) {
@@ -53,7 +54,7 @@ double arc_free_distance(const geometry::Pose2& pose, double kappa, double direc
 
 DwaResult dwa_plan(const geometry::Pose2& pose, const models::UnicycleInput& velocity,
                    const Vec2& goal, const geometry::Environment2D& env,
-                   std::span<const geometry::Circle> dynamic_obstacles, const DwaConfig& c) {
+                   std::span<const MovingObstacle> dynamic_obstacles, const DwaConfig& c) {
   validate(c);
   // Dynamic window intersected with the velocity limits.
   const double v_lo = std::max(c.min_speed, velocity.v - c.max_accel * c.control_period);
@@ -78,7 +79,8 @@ DwaResult dwa_plan(const geometry::Pose2& pose, const models::UnicycleInput& vel
         p = models::Unicycle::step(p, cand.command, c.rollout_dt);
         cand.rollout.push_back(p);
         min_clear = std::min(
-            min_clear, clearance_at(p.translation(), env, dynamic_obstacles) - c.robot_radius);
+            min_clear, clearance_at(p.translation(), env, dynamic_obstacles, (k + 1) * c.rollout_dt)
+                           - c.robot_radius);
       }
       cand.clearance = min_clear;
       // Curvature of the commanded arc; a stationary command looks straight ahead.
@@ -110,6 +112,17 @@ DwaResult dwa_plan(const geometry::Pose2& pose, const models::UnicycleInput& vel
     }
   }
   if (result.valid) {
+    result.command = result.candidates[result.best].command;
+  } else if (c.escape_when_blocked) {
+    // Nothing is admissible (e.g. an obstacle is approaching the robot): rather than freezing
+    // in place, execute the rollout that keeps the largest worst-case clearance.
+    double best_clear = -std::numeric_limits<double>::infinity();
+    for (std::size_t i = 0; i < result.candidates.size(); ++i) {
+      if (result.candidates[i].clearance > best_clear) {
+        best_clear = result.candidates[i].clearance;
+        result.best = i;
+      }
+    }
     result.command = result.candidates[result.best].command;
   }
   return result;
