@@ -69,3 +69,6 @@ credentials*.json
 *~
 .DS_Store
 Thumbs.db
+
+# CI scratch files
+clang-format-files.txt
