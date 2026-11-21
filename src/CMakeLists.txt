@@ -25,7 +25,16 @@ roboticscore_add_library(
           spatial/kd_tree.cpp
   PUBLIC_DEPS roboticscore_eigen)
 
+# estimation: generic Bayesian filters plus mobile-robot localisation models.
+roboticscore_add_library(
+  estimation
+  SOURCES estimation/consistency.cpp
+          estimation/extended_kalman_filter.cpp
+          estimation/kalman_filter.cpp
+          localization/robot_models.cpp
+  PUBLIC_DEPS roboticscore_core)
+
 add_library(roboticscore_all INTERFACE)
 set_target_properties(roboticscore_all PROPERTIES EXPORT_NAME RoboticsCore)
-target_link_libraries(roboticscore_all INTERFACE roboticscore_core)
+target_link_libraries(roboticscore_all INTERFACE roboticscore_core roboticscore_estimation)
 add_library(RoboticsCore::RoboticsCore ALIAS roboticscore_all)
